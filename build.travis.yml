@@ -1,0 +1,5 @@
+language: php
+
+git:
+  quiet:  true
+  
