@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 require 'conn.php';
 $username = $_POST["logUsername"];
 $password = $_POST["logPassword"];
