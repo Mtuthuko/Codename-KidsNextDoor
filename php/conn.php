@@ -1,3 +1,3 @@
 <?php
-$conn = mysqli_connect('localhost', 'root' , '' , 'VarsityOnline');
+$conn = mysqli_connect('localhost', 'root' , '' , 'db1');
 ?>
