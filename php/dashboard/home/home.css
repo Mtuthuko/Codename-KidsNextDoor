@@ -1,0 +1,63 @@
+body{
+    margin: 0;
+}
+
+header{
+    margin: 0;
+    background: rgba(1, 72, 202, 0.897);
+    padding: 2px 15px 5px 15px;
+}
+
+header h1 {
+    color: white;
+    display: inline;
+    margin: 0;
+    margin: 20px;
+}
+
+nav ul{
+    display: inline;
+    align-self: center;
+}
+
+nav ul li a{
+    color: white;
+}
+
+nav ul li{
+    background-color:#9999;
+    color: white;
+    display: inline-block;
+    list-style-type: none;
+    padding: 5px 20px;
+}
+
+.profileIcon{
+    display: inline-block;
+    background: yellow;
+    padding: 5px 20px;
+}
+
+.optionMenu{
+    margin-top: 5%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.option{
+    background-color:rgba(1, 72, 202, 0.897)  ;
+}
+
+.optionItem{
+    color: white;
+    text-align: center; 
+    text-anchor: middle;
+    margin-top: 2%;
+    height: 50px;
+    padding-top: 2%;;
+    background: gray ;
+    border: 5px;
+    margin-left: 25%;
+    margin-right: 25%;
+    border-color: black;
+}
