@@ -10,6 +10,7 @@
     }
     catch (PDOException $e)
     {
+        //If failed to connect to server, send the user to the error screen
         $error = 'Unable to connect to the database server.';
         include 'error.html.php';
         exit();
