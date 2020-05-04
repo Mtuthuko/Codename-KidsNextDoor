@@ -1,0 +1,48 @@
+.banner{
+    margin: 0;
+    background: #FFFFFF;
+    padding: 2px 15px 5px 15px;
+}
+
+
+
+nav ul{
+    display: inline;
+}
+
+nav ul li a{
+    color: white;
+}
+
+nav ul li{
+    background-color:#9999;
+    color: white;
+    display: inline-block;
+    list-style-type: none;
+    padding: 5px 20px;
+}
+
+.dash_body {
+   color: #FFFFFF;
+    margin: 2em;
+
+}
+
+.timing{
+    margin-left: 34em;
+}
+
+
+.discription{
+    margin: 2em;
+    color: #FFFFFF;
+    resize: none;
+
+
+  }
+
+  .special{
+      color: #FFFFFF;
+      align-self: center;
+      text-align: center;
+  }
