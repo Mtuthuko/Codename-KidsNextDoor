@@ -31,12 +31,12 @@
     <div class="optionMenu" >
         <div class="option">
             <div class="optionItem">
-                Create Exam
+                <a href="?createBooking">Create Exam</a>
             </div>
         </div>
         <div class="option">
             <div class="optionItem">
-                My Bookings
+            <a href="?myBookings"> My Bookings</a>
             </div>
         </div>
         <div class="option">

@@ -7,6 +7,7 @@
         header('Location: ../../login');
     }
 
+    //Retrieve venues from database
     try {
         //code...
         $sql = "SELECT venue_name,venue_capacity from Venue";
