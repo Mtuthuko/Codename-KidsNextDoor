@@ -1,42 +1,22 @@
-dist: precise
-
 language: php
-
 php:
   - 7.2
-
-addons:
-  mariadb: 10.4
-
-cache:
-  directories:
-    - node_modules
-    - vendor
-
-matrix:
-  include:
-    - php: 7.1
-      env: WP_VERSION=latest
-    - php: 7.0
-      env: WP_VERSION=latest
-    - php: 5.6
-      env: WP_VERSION=4.4
-    - php: 5.6
-      env: WP_VERSION=latest
-    - php: 5.6
-      env: WP_VERSION=trunk
-    - php: 5.6
-      env: WP_TRAVISCI=phpcs
-    - php: 5.3
-      env: WP_VERSION=latest
-      dist: precise
-
 before_script:
-  - cp .env.travis .env
-  - sudo mysql -e 'CREATE DATABASE testing;'
   - composer self-update
   - composer install --no-interaction
-  - php artisan migrate --no-interaction -vvv
-
 script:
   - vendor/bin/phpunit
+
+  before_deploy:
+  - openssl aes-256-cbc -K $encrypted_<put_your_key_here>_key -iv $encrypted_<put_your_key_here>_iv -in deploy_rsa.enc -out /tmp/deploy_rsa -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 /tmp/deploy_rsa
+  - ssh-add /tmp/deploy_rsa
+  - echo -e "HostName example.com\n\tStrictHostKeyChecking no\n\t"User deploy >> ~/.ssh/config
+
+  deploy:
+  skip_cleanup: true
+  provider: script
+  script: vendor/bin/dep deploy
+  on:
+    branch: master
