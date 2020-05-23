@@ -22,6 +22,8 @@ before_script:
   - npm install
 
 script:
+  - phpunit --coverage-clover build/logs/clover.xml
+  - ./vendor/bin/phpunit --coverage-clover ./tests/logs/clover.xml
   - php vendor/bin/coveralls -v
   - vendor/bin/phpunit --coverage-text
   - phpcs --ignore=app/Http/Controllers/Auth,app/Http/Controllers/Controller.php app/Http/Controllers
