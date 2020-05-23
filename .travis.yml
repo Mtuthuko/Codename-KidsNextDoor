@@ -47,7 +47,7 @@ matrix:
 before_script:
 
   - composer self-update
-  - composer require phpunit/phpunit:4.8.* satoshi/php-coveralls:dev-master
+  - composer require php-coveralls/php-coveralls
   - composer install
   - composer install --dev
   - cp .env.travis .env
