@@ -24,7 +24,10 @@ before_script:
 script:
   - phpunit --coverage-clover build/logs/clover.xml
   - ./vendor/bin/phpunit --coverage-clover ./tests/logs/clover.xml
-  - php vendor/bin/coveralls -v
   - vendor/bin/phpunit --coverage-text
   - npm run production
   - jshint resources/assets/js/modules/*
+
+
+after script:
+  - php vendor/bin/coveralls -v
