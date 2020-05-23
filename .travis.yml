@@ -47,6 +47,7 @@ matrix:
 before_script:
 
   - composer self-update
+  - composer require --dev atoum/atoum
   - composer require php-coveralls/php-coveralls
   - composer install
   - composer install --dev
@@ -61,6 +62,7 @@ before_script:
   - npm install
 
 script:
+  - bin/atoum --test-all
   - phpunit --coverage-clover build/logs/clover.xml
   - ./vendor/bin/phpunit --coverage-clover ./tests/logs/clover.xml
   - vendor/bin/phpunit --coverage-text
