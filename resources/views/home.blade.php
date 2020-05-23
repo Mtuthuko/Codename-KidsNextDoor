@@ -40,14 +40,7 @@
                             <option value="2H ">2H</option>
                             <option value="2 H 30 min ">2 H 30 min</option>
                             <option value="3 H ">3 H </option>
-                            <option value="3 H 30 min ">3 H 30 min</option>
-                            <option value="4 H">4 H</option>
-                            <option value="4 H 30 min ">4 H 30 min</option>
-                            <option value="5 H">5 H</option>
-                            <option value="5 H ">5 H </option>
-                            <option value="5 H 30 min">5 H 30 min</option>
-                            <option value="6 H">6 H</option>
-
+                            
                          </select>
                      </div>
                  </div>
