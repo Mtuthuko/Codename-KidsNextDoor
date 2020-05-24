@@ -43,17 +43,7 @@ matrix:
         - php: 7.1
           env: ILLUMINATE_VERSION=5.3.* PHPUNIT_VERSION=~5.0
 
-cache:
-    directories:
-        - $HOME/.composer/cache
 
-install:
-    - mkdir -p build/logs
-    - mv ${HOME}/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ${HOME}/xdebug.ini || return 0
-    - 'if [ "$MIN_STABILITY" != "" ]; then composer config minimum-stability $MIN_STABILITY; fi'
-    - 'if [ "$SYMFONY_VERSION" != "" ]; then sed -i "s/\"symfony\/\([^\"]*\)\": \"^2[^\"]*\"/\"symfony\/\1\": \"$SYMFONY_VERSION\"/g" composer.json; fi'
-    - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction
-    - if [ "$CHECKS" = "yes" ]; then travis_retry composer install-dev-tools; fi
 
 before_script:
 
@@ -73,12 +63,10 @@ before_script:
   - npm install
 
 script:
-  - composer composer.json
+
   - phpunit --coverage-clover build/logs/clover.xml
   - ./vendor/bin/phpunit --coverage-clover ./tests/logs/clover.xml
   - vendor/bin/phpunit --coverage-text
-  - vendor/bin/phpunit --coverage-html
-  - vendor/bin/phpunit 
   - jshint resources/assets/js/modules/*
 
 
@@ -87,15 +75,3 @@ after script:
   - php vendor/bin/php-coveralls -v
   - travis_retry php vendor/bin/php-coveralls -v
   - bash <(curl -s https://codecov.io/bash)
-
-  deploy:
-    provider: releases
-    token:
-        secure: RvyoncgjY7qxxQj6gDl+socPypw4pGVSi3cPIjl7me6D0qm9/peibmWaTmW3bbnugYTEHF1mEpR8jUKeyHnEyxWG+gWD71KD42ofT22QUxBoKpVxyRMr44gJNCuTlbzvcQwsURRvP9Fkic4oVukpvjnOCifBdlmay+NE31Wjof0=
-    file: build/artifacts/php-coveralls.phar
-    skip_cleanup: true
-    on:
-        repo: php-coveralls/php-coveralls
-        tags: true
-        all_branches: true
-        condition: $BOX = yes
