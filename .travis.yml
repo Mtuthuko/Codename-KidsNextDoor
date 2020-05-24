@@ -67,6 +67,7 @@ script:
   - phpunit --coverage-clover build/logs/clover.xml
   - ./vendor/bin/phpunit --coverage-clover ./tests/logs/clover.xml
   - vendor/bin/phpunit --coverage-text
+  - vendor/bin/phpunit --coverage-html
   - jshint resources/assets/js/modules/*
 
 
