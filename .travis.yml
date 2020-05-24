@@ -73,7 +73,7 @@ before_script:
   - npm install
 
 script:
-
+  - composer composer.json
   - phpunit --coverage-clover build/logs/clover.xml
   - ./vendor/bin/phpunit --coverage-clover ./tests/logs/clover.xml
   - vendor/bin/phpunit --coverage-text
