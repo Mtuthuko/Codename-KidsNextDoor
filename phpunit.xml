@@ -26,7 +26,7 @@
 
     <testsuites>
         <testsuite name="PHP Coveralls component test suite">
-            <directory>./tests/</directory>
+            <directory>tests/</directory>
         </testsuite>
     </testsuites>
 
