@@ -4,3 +4,14 @@ repo_token: 4pQcywSl8cFKrQI4AkQVC6VrRqvkj5GCz
 # for php-coveralls
 coverage_clover: build/logs/clover.xml
 json_path: build/logs/coveralls-upload.jso
+
+
+# glob
+coverage_clover: build/logs/clover-*.xml
+
+# array
+# specify files
+coverage_clover:
+  - build/logs/clover-Auth.xml
+  - build/logs/clover-Db.xml
+  - build/logs/clover-Validator.xml
