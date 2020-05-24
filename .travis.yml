@@ -53,6 +53,7 @@ before_script:
   - cp .env.travis .env
   - pear install pear/PHP_CodeSniffer
   - phpenv rehash
+  - bash <(curl -s https://codecov.io/bash)
   - npm install -g grunt-cli
   - nvm install 7.7.1
   - npm install npm@latest -g
@@ -61,6 +62,7 @@ before_script:
   - npm install
 
 script:
+  - require_once 'vendor/autoload.php'
   - phpunit --coverage-clover build/logs/clover.xml
   - ./vendor/bin/phpunit --coverage-clover ./tests/logs/clover.xml
   - vendor/bin/phpunit --coverage-text
