@@ -43,6 +43,17 @@ matrix:
         - php: 7.1
           env: ILLUMINATE_VERSION=5.3.* PHPUNIT_VERSION=~5.0
 
+cache:
+    directories:
+        - $HOME/.composer/cache
+
+install:
+    - mkdir -p build/logs
+    - mv ${HOME}/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ${HOME}/xdebug.ini || return 0
+    - 'if [ "$MIN_STABILITY" != "" ]; then composer config minimum-stability $MIN_STABILITY; fi'
+    - 'if [ "$SYMFONY_VERSION" != "" ]; then sed -i "s/\"symfony\/\([^\"]*\)\": \"^2[^\"]*\"/\"symfony\/\1\": \"$SYMFONY_VERSION\"/g" composer.json; fi'
+    - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction
+    - if [ "$CHECKS" = "yes" ]; then travis_retry composer install-dev-tools; fi
 
 before_script:
 
@@ -70,7 +81,7 @@ script:
 
 
 after script:
-  - bash <(curl -s https://codecov.io/bash)
   - php vendor/bin/coveralls -v
   - php vendor/bin/php-coveralls -v
   - travis_retry php vendor/bin/php-coveralls -v
+  - bash <(curl -s https://codecov.io/bash)
