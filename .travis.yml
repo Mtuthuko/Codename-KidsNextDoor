@@ -73,10 +73,12 @@ before_script:
   - npm install
 
 script:
+  - composer require coveralls
   - composer composer.json
   - phpunit --coverage-clover build/logs/clover.xml
   - ./vendor/bin/phpunit --coverage-clover ./tests/logs/clover.xml
   - vendor/bin/phpunit --coverage-text
+  - vendor/bin/phpunit --coverage-html  cover
   - vendor/bin/phpunit -v
   - jshint resources/assets/js/modules/*
 

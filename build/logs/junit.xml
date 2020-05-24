@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="PHP Coveralls component test suite" tests="2" assertions="2" errors="0" warnings="0" failures="0" skipped="0" time="0.459045">
+    <testsuite name="Tests\Feature\ExampleTest" file="/home/parrotphish/yu3/Projects/Codename-KidsNextDoor-master/tests/Feature/ExampleTest.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.458590">
+      <testcase name="testBasicTest" class="Tests\Feature\ExampleTest" classname="Tests.Feature.ExampleTest" file="/home/parrotphish/yu3/Projects/Codename-KidsNextDoor-master/tests/Feature/ExampleTest.php" line="15" assertions="1" time="0.458590"/>
+    </testsuite>
+    <testsuite name="Tests\Unit\ExampleTest" file="/home/parrotphish/yu3/Projects/Codename-KidsNextDoor-master/tests/Unit/ExampleTest.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.000455">
+      <testcase name="testBasicTest" class="Tests\Unit\ExampleTest" classname="Tests.Unit.ExampleTest" file="/home/parrotphish/yu3/Projects/Codename-KidsNextDoor-master/tests/Unit/ExampleTest.php" line="14" assertions="1" time="0.000455"/>
+    </testsuite>
+  </testsuite>
+</testsuites>
