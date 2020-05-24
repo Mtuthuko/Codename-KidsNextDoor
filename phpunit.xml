@@ -17,6 +17,12 @@
             <directory suffix=".php">./app</directory>
         </whitelist>
     </filter>
+             
+              <filter>
+           <whitelist>
+            <directory suffix=".php">./phpmailer/UCTAPS.php</directory>
+           </whitelist>
+         </filter>
     <php>
         <server name="APP_ENV" value="testing"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
@@ -28,9 +34,18 @@
         <server name="SESSION_DRIVER" value="array"/>
         <server name="TELESCOPE_ENABLED" value="false"/>
     </php>
+<<<<<<< HEAD
     <logging>
 
        <log type="coverage-clover" target="build/logs/clover.xml"/>
        
    </logging>
+=======
+             <logging>
+           <log type="coverage-html" target="test_reports/coverage" title="coverage" charset="UTF-8" yui="true" highlight="true"
+             lowUpperBound="35" highLowerBound="70"/>
+           <log type="coverage-clover" target="test_reports/logs/clover.xml"/>
+           <log type="junit" target="test_reports/logs/clover.xml" logIncompleteSkipped="false"/>
+        </logging>
+>>>>>>> 5c77da82834aba7fae3edf208760b4fa7e4439ca
 </phpunit>
