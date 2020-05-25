@@ -2,10 +2,12 @@ name: Codecov
 on: [push]
 jobs:
   run:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     env:
-      OS: ubuntu-latest
+      OS: ${{ matrix.os }}
       PHP: '7.2'
     steps:
     - uses: actions/checkout@v2
