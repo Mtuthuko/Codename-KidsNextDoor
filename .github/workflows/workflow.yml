@@ -24,7 +24,7 @@ jobs:
          pear install pear/PHP_CodeSniffer
          phpenv rehash
          npm install -g grunt-cli
-         nvm install 7.7.1
+         npm install 7.7.1
          npm install npm@latest -g
          npm install -g grunt-cli
          npm install -g jshint
