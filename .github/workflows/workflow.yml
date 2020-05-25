@@ -13,8 +13,6 @@ jobs:
     - uses: actions/checkout@v2
     - name: Setup Php
       uses: actions/checkout@v2
-      with:
-        php-version: 7.2
     - name: Generate coverage report
       run: |
          composer self-update
