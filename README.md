@@ -9,5 +9,10 @@
 <a href="https://github.com/Mtuthuko/Codename-KidsNextDoor">
     <img src="https://github.com/Mtuthuko/Codename-KidsNextDoor/workflows/PHP%20Composer/badge.svg?branch=master" />
 </a>
+
+<a href="https://github.com/Mtuthuko/Codename-KidsNextDoor">
+    <img src="https://github.com/Mtuthuko/Codename-KidsNextDoor/workflows/Laravel/badge.svg?branch=master" />
+</a>
+
 </p>
 
