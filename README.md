@@ -10,4 +10,4 @@
     <img src="https://github.com/Mtuthuko/Codename-KidsNextDoor/workflows/PHP%20Composer/badge.svg?branch=master" />
 </a>
 </p>
-![PHP Composer](https://github.com/Mtuthuko/Codename-KidsNextDoor/workflows/PHP%20Composer/badge.svg?branch=master)
+
