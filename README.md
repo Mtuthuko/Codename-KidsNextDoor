@@ -6,4 +6,8 @@
 <a href="https://codecov.io/gh/Mtuthuko/Codename-KidsNextDoor">
   <img src="https://codecov.io/gh/Mtuthuko/Codename-KidsNextDoor/branch/master/graph/badge.svg" />
 </a>
+<a href="https://github.com/Mtuthuko/Codename-KidsNextDoor">
+    <img src="https://github.com/Mtuthuko/Codename-KidsNextDoor/workflows/PHP%20Composer/badge.svg?branch=master" />
+</a>
 </p>
+![PHP Composer](https://github.com/Mtuthuko/Codename-KidsNextDoor/workflows/PHP%20Composer/badge.svg?branch=master)
