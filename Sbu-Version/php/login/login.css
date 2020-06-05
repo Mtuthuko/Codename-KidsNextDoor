@@ -1,0 +1,31 @@
+.card{
+    background-color:rgba(0, 0, 0, 0.76);
+}
+
+.main{
+    background-color:rgb(160, 160, 160); 
+    padding:20px 20px 20px 20px; 
+    top:25%; left:25%;right:25%;
+    border-radius: 10px; 
+    position:absolute; 
+    align-self:center
+}
+
+.logo{
+    margin-left:25%;
+    padding-left: 5%;
+    margin-right:25%;
+    box-align: center;
+}
+
+.form-group{
+    margin-left:25%;
+    margin-right:25%;
+}
+
+.loginButton{
+    margin-left:25%;
+    margin-right:25%;
+    padding-left:25%; 
+    align-self: center;
+}

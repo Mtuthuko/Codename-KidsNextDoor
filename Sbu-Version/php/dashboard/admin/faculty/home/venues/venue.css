@@ -1,0 +1,33 @@
+body{
+    margin: 0;
+}
+
+header{
+    margin: 0;
+    background: rgba(1, 72, 202, 0.897);
+    padding: 2px 15px 5px 15px;
+}
+
+header h1 {
+    color: white;
+    display: inline;
+    margin: 0;
+    margin: 20px;
+}
+
+nav ul{
+    display: inline;
+    align-self: center;
+}
+
+nav ul li a{
+    color: white;
+}
+
+nav ul li{
+    background-color:#9999;
+    color: white;
+    display: inline-block;
+    list-style-type: none;
+    padding: 5px 20px;
+}

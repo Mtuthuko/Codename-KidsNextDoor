@@ -1,0 +1,100 @@
+body{
+    margin: 0;
+    background-color: #0B3865;
+}
+
+.banner{
+    margin: 0;
+    background: #FFFFFF;
+    padding: 2px 15px 5px 15px;
+}
+
+header h1 {
+    color: white;
+    display: inline;
+    margin: 0;
+    margin: 20px;
+}
+
+nav ul{
+    display: inline;
+}
+
+nav ul li a{
+    color: white;
+}
+
+nav ul li{
+    background-color:#9999;
+    color: white;
+    display: inline-block;
+    list-style-type: none;
+    padding: 5px 20px;
+}
+
+.dash_body {
+   color: #FFFFFF;
+    margin: 2em;
+    
+}
+.text{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display: inline-block;
+    align-self: center;
+    
+}
+.timing{
+    margin-left: 34em;
+}
+
+
+.description{
+    margin: 2em;
+    color: #FFFFFF;
+    resize: none;
+    
+    
+  }
+
+.special{
+      color: #FFFFFF;
+      align-self: center;
+      text-align: center;
+}
+
+.formButtons{
+    margin-top: 5%;
+    margin-left:25%;
+    margin-right:25%;
+    padding-right: 15%;
+    padding-left:15%; 
+    align-self: center;
+}
+
+.courseCodes{
+    padding:5px;
+    width: 200px;
+    height: 250px;
+    background-color: white;
+    color: black;
+    display: inline-block;
+}
+
+.add-course-btn{
+    width:25px;
+    height:25px;
+    font-size: large;
+    font-weight: bold;
+    border:2px solid white;
+    padding:5px;
+    color: white;
+    text-decoration: none;
+}
+
+.add-course-btn:hover{
+    background-color: white;
+    color: #0B3865;
+    cursor: pointer;
+}
