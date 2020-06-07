@@ -22,3 +22,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 //Route::view('form', 'home');
 Route::post('submit', 'HomeController@save');
+
+Route::get('exambooking','HomeController@search');
+
+//Route::get('/search','HomeController@search');

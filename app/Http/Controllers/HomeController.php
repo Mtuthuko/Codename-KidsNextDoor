@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Bookings;
+use App\Student;
+use App\SearchDB;
+
 
 class HomeController extends Controller
 {
@@ -27,6 +30,16 @@ class HomeController extends Controller
         return view('home');
     }
 
+    //Fetch data from DB
+    public function list($value='')
+    {
+      // code...
+      $courses = Student::all()->toArray();
+      return view('exambookings.dashboard',compact('courses'));
+    }
+
+
+    //post data to database
     public function save(Request $req)
     {
       // code...
@@ -45,6 +58,16 @@ class HomeController extends Controller
       $user->save();
       return view('home');
 
+
+    }
+
+    //Search Data on database
+    public function search(Request $request)
+    {
+      $search = $request->get('search');
+      $posts = SearchDB::where('code', 'like', '%'.$search.'%')->paginate(50);
+
+      return view('exambookings.dashboard',compact('posts'));
 
     }
 }
