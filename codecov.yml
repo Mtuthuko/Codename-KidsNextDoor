@@ -4,7 +4,7 @@ codecov:
   ci:
     - "travis-ci.com"
   strict_yaml_branch: "yaml-config"
-  max_report_age: 24
+  max_report_age: 10000000000000000
   disable_default_path_fixes: no
   require_ci_to_pass: yes
   notify:
