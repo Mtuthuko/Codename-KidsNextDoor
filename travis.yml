@@ -63,8 +63,7 @@ script:
     if [[ "$WP_TRAVISCI" == "travis:js-tests" ]] ; then
       grunt jasmine
     fi
-  - phpunit --coverage-clover build/logs/clover.xml
-  - ./vendor/bin/phpunit --coverage-clover ./tests/logs/clover.xml
+
 
 after script:  - sh -c 'if [ &quot;$TRAVIS_PHP_VERSION&quot; != &quot;hhvm&quot; ]; then php vendor/bin/coveralls -v; fi;'
 - php vendor/bin/coveralls -v
