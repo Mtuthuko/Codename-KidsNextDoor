@@ -18,16 +18,7 @@
             <directory suffix=".php">./app</directory>
         </whitelist>
 
-        <whitelist processUncoveredFilesFromWhitelist="false">
-            <directory suffix=".php">./app/Http/Middleware/Authenticate.php/</directory>
-        </whitelist>
 
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./routes</directory>
-        </whitelist>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./resources</directory>
-        </whitelist>
     </filter>
     <php>
         <server name="APP_ENV" value="testing"/>
@@ -39,5 +30,7 @@
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>
         <server name="TELESCOPE_ENABLED" value="false"/>
+        <server name="DB_CONNECTION" value="sqlite"/>
+        <server name="DB_DATABASE" value=":memory:"/>
     </php>
 </phpunit>
