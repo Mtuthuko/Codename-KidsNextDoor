@@ -2,7 +2,7 @@ service_name: travis-pro
 repo_token: 4pQcywSl8cFKrQI4AkQVC6VrRqvkj5GCz
 
 # for php-coveralls
-coverage_clover: ./clover.xml
+coverage_clover: build/logs/clover.xml
 json_path: build/logs/coveralls-upload.jso
 
 
