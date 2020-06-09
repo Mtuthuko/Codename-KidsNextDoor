@@ -23,6 +23,14 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/home';
 
+
+    /**
+     * The path to the "
+     * 
+     */
+    public const EGO_DASHBOARD = '/dashboards/ego';
+
+
     /**
      * Define your route model bindings, pattern filters, etc.
      *

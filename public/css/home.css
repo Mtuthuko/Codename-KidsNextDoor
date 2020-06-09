@@ -15,7 +15,6 @@ nav ul li a{
 }
 
 nav ul li{
-    background-color:#9999;
     color: white;
     display: inline-block;
     list-style-type: none;
@@ -37,12 +36,36 @@ nav ul li{
     margin: 2em;
     color: #FFFFFF;
     resize: none;
+}
 
+.special{
+    color: #FFFFFF;
+    align-self: center;
+    text-align: center;
+}
 
-  }
+.courseCodes{
+    padding:5px;
+    width: 200px;
+    height: 250px;
+    background-color: white;
+    color: black;
+    display: inline-block;
+}
 
-  .special{
-      color: #FFFFFF;
-      align-self: center;
-      text-align: center;
-  }
+.add-course-btn{
+    width:25px;
+    height:25px;
+    font-size: large;
+    font-weight: bold;
+    border:2px solid white;
+    padding:5px;
+    color: white;
+    text-decoration: none;
+}
+
+.add-course-btn:hover{
+    background-color: white;
+    color: #0B3865;
+    cursor: pointer;
+}

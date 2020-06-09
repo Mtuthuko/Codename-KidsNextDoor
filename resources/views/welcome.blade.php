@@ -13,11 +13,6 @@
                 <link href="/css/loader.css" rel="stylesheet">
 
 
-
-
-
-
-
                   <div class="loader-wrapper">
 
 

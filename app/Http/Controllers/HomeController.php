@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Bookings;
+use App\Venue;
 
 class HomeController extends Controller
 {
+    
     /**
      * Create a new controller instance.
      *
@@ -24,7 +27,41 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        /**
+         * Get the user's role and display's the appropraite dashboard
+         * 
+         * returns an integer 
+         * 1 = student, 2 = faculty staff, 3 = ego staff
+         * 
+         */
+        $user_role = auth()->user()->user_role;
+
+        if($user_role == '1')  //student
+        {
+            return view('dashboard.student');
+        }
+        elseif($user_role == '2')   //faculty staff
+        {
+                   
+            //This fetches all the venues from the database
+            $venues = Venue::all();
+
+            //We return a view with venues
+            return view('home',['venues' => $venues]);
+        }
+        elseif($user_role == '3')   //EGO staff
+        {
+            return view('dashboard.ego');
+        }
+        
+    }
+
+    public function dashboard()
+    { 
+
+
+
+        //echo $user_role;
     }
 
     public function save(Request $req)
@@ -36,15 +73,16 @@ class HomeController extends Controller
       $user->title = $req->title;
       $user->course = $req->course;
       $user->discription = $req->discription;
-      $user->vanue = $req->vanue;
+      $user->vanue = $req->venue;
       $user->paperno = $req->paperno;
       $user->startTime = $req->startTime;
       $user->endTime = $req->endTime;
       $user->tabletype = $req->tabletype;
 
       $user->save();
-      return view('home');
 
+    // Redirecting the page to the home route defined in web.php ...
+    return redirect()->route('home');
 
     }
 }

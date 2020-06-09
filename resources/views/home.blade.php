@@ -2,6 +2,8 @@
 
 @section('content')
 
+ <!-- Styles -->
+ <link href="/css/home.css" rel="stylesheet">
 
 <div class="container">
     <div class="row justify-content-center">
@@ -10,20 +12,30 @@
             <!-- Normal BOOKINGS -->
                 <div class="special"><h1>Bookings</h1></div>
 
-
-
-
                   <form action="submit" method="POST" >
                     @csrf
                     <div class="dash_body">
                      <label >Exam Title</label>
                      <div style="margin-left: 30em;" class="text"> <input type="text" name="title"></div>
-                 </div>
+                    </div>
 
                  <div class="dash_body">
-                     <label >Add Courses</label>
-                    <div style="margin-left: 29.1em;" class="text"> <input type="text" name="course"></div>
+                  <label >Add Courses</label>
+                 <div style="margin-left: 29.1em;" class="text">
+                  <input type="text" name="course">
+                  <a class="add-course-btn" href="?addCourse">&#43</a>
+              </div>
+
+              
+                 <div class="courseCodes" >
+                      <div style="background-color: #0B3865;color:white;border: 1px solid black; padding:5px;border:2px solid white">
+                          Course Codes
+                      </div>
+                      <div>
+                          <?php ?>
+                      </div>
                  </div>
+              </div>
 
                  <div class="discription">
                      <label >Exam Discription</label>
@@ -47,7 +59,18 @@
 
                  <div class="dash_body">
                      <label >Venue Request</label>
-                    <div style="margin-left: 28em;" class="text"> <input type="text" name="vanue"></div>
+                    <div style="margin-left: 28em;" class="text">
+                      <!---Loading Venues from database into dropdown menu--->
+                      <select name="venue">
+                        <option  value="" >Select Venue</option>
+                        @foreach ($venues as $venue)
+                        <option value="{{$venue['ID']}}">
+                        {{$venue['venue_name']}}
+                        </option>
+                        @endforeach
+                    </select>
+                    <!---END Venue dropdown load--->
+                      </div>
                  </div>
 
                  <div class="dash_body">
