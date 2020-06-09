@@ -103,9 +103,11 @@ class HomeController extends Controller
     public function search(Request $request)
     {
       $search = $request->get('search');
+      
       $posts = SearchDB::where('code', 'like', '%'.$search.'%')->paginate(50);
 
-      return view('exambookings.dashboard',compact('posts'));
+      return view('layouts.addcourses',compact('posts'));
+      //return view('exambookings.dashboard',compact('posts'));
 
     }
 }

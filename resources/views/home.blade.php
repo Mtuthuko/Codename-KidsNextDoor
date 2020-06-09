@@ -20,23 +20,13 @@
                     </div>
 
                  <div class="dash_body">
-                  <label >Add Courses</label>
-                 <div style="margin-left: 29.1em;" class="text">
-                  <input type="text" name="course">
-                  <a class="add-course-btn" href="?addCourse">&#43</a>
-              </div>
-
-              
-                 <div class="courseCodes" >
-                      <div style="background-color: #0B3865;color:white;border: 1px solid black; padding:5px;border:2px solid white">
-                          Course Codes
-                      </div>
-                      <div>
-                          <?php ?>
-                      </div>
-                 </div>
-              </div>
-
+                    <label >Add Courses</label>
+                    <div style="margin-left: 29.1em;" class="text">
+                    <input type="search" placeholder="Enter Course Code">
+                    <a class="add-course-btn" href="/addcourse">&#43</a>
+                    </div>
+                        
+                </div>
                  <div class="discription">
                      <label >Exam Discription</label>
                      <div style="margin-left: 27em;" class="text"><textarea maxlength="250" wrap="hard" type="text" name="discription" id="discription" cols="30" rows="5"></textarea></div>
