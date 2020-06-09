@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Bookings;
 use App\Venue;
+use App\Student;
+use App\SearchDB;
+
 
 class HomeController extends Controller
 {
@@ -64,6 +67,16 @@ class HomeController extends Controller
         //echo $user_role;
     }
 
+    //Fetch data from DB
+    public function list($value='')
+    {
+      // code...
+      $courses = Student::all()->toArray();
+      return view('exambookings.dashboard',compact('courses'));
+    }
+
+
+    //post data to database
     public function save(Request $req)
     {
       // code...
@@ -83,6 +96,16 @@ class HomeController extends Controller
 
     // Redirecting the page to the home route defined in web.php ...
     return redirect()->route('home');
+
+    }
+
+    //Search Data on database
+    public function search(Request $request)
+    {
+      $search = $request->get('search');
+      $posts = SearchDB::where('code', 'like', '%'.$search.'%')->paginate(50);
+
+      return view('exambookings.dashboard',compact('posts'));
 
     }
 }

@@ -52,7 +52,7 @@
                             <option value="2H ">2H</option>
                             <option value="2 H 30 min ">2 H 30 min</option>
                             <option value="3 H ">3 H </option>
-                            
+
                          </select>
                      </div>
                  </div>
@@ -117,6 +117,18 @@
                          </select>
 
                    </ol>
+
+                                      <ol>
+                                        <label >Special Vanue</label>
+
+                                            <select >
+                                                <option  value="" ></option>
+                                                <option value="">Computer Lab</option>
+                                                <option value="">Chemistry Lab</option>
+                                                <option value="">Physics Lab</option>
+                                            </select>
+
+                                      </ol>
                  </div>
 
                  <!-- End Special Requests -->

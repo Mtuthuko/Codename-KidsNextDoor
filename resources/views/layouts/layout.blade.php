@@ -11,6 +11,7 @@
 
         <!-- Styles -->
         <link href="/css/main.css" rel="stylesheet">
+        <link href="/css/dashboard.css" rel="stylesheet">
 
     </head>
   <main class="py-4">
