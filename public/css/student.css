@@ -15,23 +15,29 @@
   .content-table thead tr {
     background-color: #009879;
     color: #ffffff;
-    text-align: left;
+    text-align: center;
     font-weight: bold;
   }
   
   .content-table th,
   .content-table td {
+    text-align: center;
     padding: 16px 15px;
   }
   
   
   .content-table tbody tr,td {
     border-bottom: 2px solid #dddddd;
-    
+    color:white;
   }
   
   .content-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+    height: 2px;
+  }
+
+  .content-table tbody tr:hover{
+    background-color: #012261ee;
+    color: white;
   }
   
   .content-table tbody tr:last-of-type {

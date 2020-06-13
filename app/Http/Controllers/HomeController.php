@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Bookings;
+use App\Exams;
 use App\Venue;
 use App\Clashes;
 use App\Student;
@@ -43,7 +44,8 @@ class HomeController extends Controller
 
         if($user_role == '1')  //student
         {
-            return view('dashboard.student');
+            $bookings = Exams::all();
+            return view('dashboard.student',['bookings' => $bookings]);
         }
         elseif($user_role == '2')   //faculty staff
         {
@@ -56,11 +58,11 @@ class HomeController extends Controller
         }
         elseif($user_role == '3')   //EGO staff
         {
-        $clashes = Clashes::all();
+            $clashes = Clashes::all();
 
             return view('dashboard.ego',['clashes' => $clashes]);
             $home = new HomeController();
-            //$home->egoDashboard();
+            //$this->egoDashboard();
         }
         
     }
