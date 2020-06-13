@@ -31,41 +31,115 @@ nav ul li{
     width: 80%;
     margin: 1% 5%;
     padding:10px;
-    background-color: whitesmoke;
-    height: 80vh;
+
+    background-color:whitesmoke ;   
     display: inline-block;
     border-radius: 10px;
+    min-height: 100vh;
+    max-height: fit-content;
 }
 
 .dash_grid{
-    border: 1.5px solid rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     margin: 1.5%;
     padding: 15px;
-    width: 90%;
+    width: 95%;
+    max-height: inherit;
 
     /* Handle the grid layout */
     display: inline-grid;
     grid-column-gap: 1.5%;
     grid-row-gap: 10px;
-    grid-template-columns: auto auto auto;
-    background-color:white ; 
+    grid-template-columns: auto auto 0px;
+
 }
 
 .grid_item{
-    border: 1.5px solid rgba(0, 0, 0, 0.25);
-    max-width: 450px;
-    min-width: 400px;
+    border: 3px solid rgba(0, 29, 122, 0.72);
+    width: 100%;
+    min-width: 100%;
+    margin: 5px;
     border-radius: 10px;
     padding: 5px 5px;
     display: inline-block;  
-    height: 500px;
-    background-color: white;  
+    height: 30vmax;
+    background-color: whitesmoke;
+    color: rgba(0, 0, 0, 0.89);
+      
+}
+
+.grid-item-heading{
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #0B3865;
+    color: white;
+}
+p {
+    font-size: medium;
+}
+
+.clash-detials
+{
+    padding: 2px;
+    max-height: 50px;
+    text-align:left;
+    display: inline;
+    color: black;
+}
+
+.clash-date
+{
+    font-size: small;
+    padding: 2px;
+    text-align:right;
+}
+.clash-item{
+    width: 100%;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 4px;
+    border:2px solid rgba(226, 15, 15, 0.72);
+    background-color: wheat;
+}
+
+.btn-view-clash{
+    color: white;
+    display: inline-block;
+    width: 250px;
+    padding: 5px;
+    background-color:  #0B3865;
+    
+}
+.btn-view-clash a{
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn-view-clash:hover{
+    cursor: pointer;
+    background-color: rgb(16, 91, 165);
 }
 
 .dash_option{
+    display: inline-block;
+    background-color:  #0B3865 ;
+    width: 20%;
+    padding:15px;
+}
+
+.dash_option a{
+    color: white;
     font-size: larger;
     
+
+}
+
+.dash_option:hover{
+    cursor: pointer;
+    background-color: rgb(16, 91, 165);
 }
 
 /*******END OF EGO DASHBOARD STYLING*****/

@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Bookings;
 use App\Venue;
+use App\Clashes;
 use App\Student;
 use App\SearchDB;
+
 
 
 class HomeController extends Controller
@@ -54,16 +56,29 @@ class HomeController extends Controller
         }
         elseif($user_role == '3')   //EGO staff
         {
-            return view('dashboard.ego');
+        $clashes = Clashes::all();
+
+            return view('dashboard.ego',['clashes' => $clashes]);
+            $home = new HomeController();
+            //$home->egoDashboard();
         }
         
     }
 
-    public function dashboard()
+     /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function egoDashboard()
     { 
+        $clashes = Clashes::all();
+        if($clashes != "")
+        {
+            return view('dashboard.ego',['clashes' => $clashes]);
+        }
 
-
-
+        return view('dashboard.ego',['clashes' => $clashes]);
         //echo $user_role;
     }
 
