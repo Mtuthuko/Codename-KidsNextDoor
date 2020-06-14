@@ -75,4 +75,4 @@ after script:
   - php vendor/bin/coveralls -v
   - php vendor/bin/php-coveralls -v
   - travis_retry php vendor/bin/php-coveralls -v
-  - bash <(curl -s https://codecov.io/bash)
+  
