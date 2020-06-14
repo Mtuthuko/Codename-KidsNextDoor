@@ -109,7 +109,7 @@
                    </ol>
 
                                       <ol>
-                                        <label >Special Vanue</label>
+                                        <label >Special Venue</label>
 
                                             <select >
                                                 <option  value="" ></option>

@@ -41,21 +41,21 @@ nav ul li{
 
 .dash_grid{
     border-radius: 10px;
-    margin: 1.5%;
+    margin: 0px 20px;
     padding: 15px;
     width: 95%;
     max-height: inherit;
 
     /* Handle the grid layout */
     display: inline-grid;
-    grid-column-gap: 1.5%;
+    grid-column-gap: 0px;
     grid-row-gap: 10px;
-    grid-template-columns: auto auto 0px;
+    grid-template-columns: auto auto auto;
 
 }
 
 .grid_item{
-    border: 3px solid rgba(0, 29, 122, 0.72);
+    border: 3px solid rgba(36, 47, 63, 0.72);
     width: 100%;
     min-width: 100%;
     margin: 5px;
@@ -72,11 +72,17 @@ nav ul li{
     border-radius: 5px;
     margin-bottom: 10px;
     padding: 5px;
-    background-color: #0B3865;
+    background-color: rgb(36, 53, 78);
     color: white;
 }
 p {
     font-size: medium;
+}
+
+.clashes-container{
+    padding: 10px;
+    height: 25vmax;
+    overflow-y: scroll;
 }
 
 .clash-detials
@@ -88,11 +94,30 @@ p {
     color: black;
 }
 
-.clash-date
+.clash-dates
+{
+    font-size: large;
+    padding: 2px;
+    text-align:right;
+    color: #0B3865;
+
+}
+
+.statusOn{
+    color: green;
+}
+
+.statusOff{
+    color: red;
+}
+.clash-dates h3
 {
     font-size: small;
     padding: 2px;
+
     text-align:right;
+    top:0;
+    float: right;
 }
 .clash-item{
     width: 100%;
@@ -102,6 +127,26 @@ p {
     margin-top: 4px;
     border:2px solid rgba(226, 15, 15, 0.72);
     background-color: wheat;
+}
+
+.clash-item-resolved{
+    width: 100%;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 4px;
+    border: 2px solid rgba(0, 255, 0, 0.72);
+    background-color: rgba(115, 255, 115, 0.48);
+}
+
+.clash-controls{
+    margin-top: 15px;
+    text-align: center;
+    padding: 20px;
+}
+
+.clash-controls h1{
+    color: black;
 }
 
 .btn-view-clash{
@@ -123,12 +168,41 @@ p {
     background-color: rgb(16, 91, 165);
 }
 
+.edit-clash{
+    display: inline-block;
+    height: 40vh;
+    width: 72%;
+    padding: 10px;
+}
+
+.btn-clash{
+    border-radius: 10px;
+    margin-top: 7vh;
+    width: 15%;
+    display: inline-block;
+}
+
+
+.clash-selector{
+    margin-left: 20px;
+    padding: 10px;
+    font-size: larger;
+    display: inline-block;
+}
+
+
+
 .dash_option{
     display: inline-block;
     background-color:  #0B3865 ;
     width: 20%;
     padding:15px;
 }
+
+.btn-back{
+    background-color: gray;
+}
+
 
 .dash_option a{
     color: white;
@@ -185,4 +259,16 @@ p {
     background-color: white;
     color: #0B3865;
     cursor: pointer;
+}
+
+/***
+Styling for the dashboard menu
+***/
+
+.menu-dash{
+    border: 2px solid red;
+    position: absolute;
+    display: block;
+    float: left;
+    margin-top: 25%;
 }

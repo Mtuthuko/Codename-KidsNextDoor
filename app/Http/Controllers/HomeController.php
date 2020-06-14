@@ -67,22 +67,6 @@ class HomeController extends Controller
         
     }
 
-     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function egoDashboard()
-    { 
-        $clashes = Clashes::all();
-        if($clashes != "")
-        {
-            return view('dashboard.ego',['clashes' => $clashes]);
-        }
-
-        return view('dashboard.ego',['clashes' => $clashes]);
-        //echo $user_role;
-    }
 
     //Fetch data from DB
     public function list($value='')
@@ -123,8 +107,8 @@ class HomeController extends Controller
       
       $posts = SearchDB::where('code', 'like', '%'.$search.'%')->paginate(50);
 
-      return view('layouts.addcourses',compact('posts'));
-      //return view('exambookings.dashboard',compact('posts'));
+      //return view('layouts.addcourses',compact('posts'));
+      return view('exambookings.dashboard',compact('posts'));
 
     }
 }

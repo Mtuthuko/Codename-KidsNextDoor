@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ClashesController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -26,3 +28,8 @@ Route::post('submit', 'HomeController@save');
 Route::get('exambooking','HomeController@search');
 
 Route::post('/home','HomeController@search');
+
+//CRUD implemented routes
+Route::resource('/home/clashes','ClashesController');
+
+Route::post('/home/update', 'ClashesController@update')->name('updateclash');
