@@ -54,7 +54,7 @@ class HomeController extends Controller
             //$venues = Venue::all();
 
             //We return a view with venues
-            return view('exambookings.dashboard');
+            return return view('exambookings.dashboard');
         }
         elseif($user_role == '3')   //EGO staff
         {
