@@ -20,6 +20,7 @@
 </button>
         </span>
       </div>
+</form>
 
 <div style="overflow-x:auto;">
 <table class="content-table">
@@ -49,11 +50,11 @@
       <td>{{{$exam['duration']}}}</td>
       <td>{{{$exam['size']}}}</td>
       <td>{{{$exam['concurrent_exams']}}}</td>
-      
-  
-    </tr> 
+
+
+    </tr>
    @endforeach
-    
+
   </tbody>
 </table>
   </div>
