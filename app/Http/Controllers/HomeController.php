@@ -15,7 +15,7 @@ use App\SearchDB;
 
 class HomeController extends Controller
 {
-    
+
     /**
      * Create a new controller instance.
      *
@@ -35,10 +35,10 @@ class HomeController extends Controller
     {
         /**
          * Get the user's role and display's the appropraite dashboard
-         * 
-         * returns an integer 
+         *
+         * returns an integer
          * 1 = student, 2 = faculty staff, 3 = ego staff
-         * 
+         *
          */
         $user_role = auth()->user()->user_role;
 
@@ -49,7 +49,7 @@ class HomeController extends Controller
         }
         elseif($user_role == '2')   //faculty staff
         {
-                   
+
             //This fetches all the venues from the database
             $venues = Venue::all();
 
@@ -64,7 +64,7 @@ class HomeController extends Controller
             $home = new HomeController();
             //$this->egoDashboard();
         }
-        
+
     }
 
      /**
@@ -73,7 +73,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function egoDashboard()
-    { 
+    {
         $clashes = Clashes::all();
         if($clashes != "")
         {
@@ -119,12 +119,23 @@ class HomeController extends Controller
     //Search Data on database
     public function search(Request $request)
     {
-      $search = $request->get('search');
-      
-      $posts = SearchDB::where('code', 'like', '%'.$search.'%')->paginate(50);
+      if(strlen($request) > 2)
+      {
+        $search = $request->get('search');
 
-      return view('layouts.addcourses',compact('posts'));
-      //return view('exambookings.dashboard',compact('posts'));
+        $posts = SearchDB::where('code', 'like', '%'.$search.'%')->paginate(50);
+
+        //return view('layouts.addcourses',compact('posts'));
+       return view('exambookings.dashboard',compact('posts'));
+      }
+      else
+       {
+        echo "PLEASE SEARCH BY COURSE CODE";
+      }
+
 
     }
+
+    //edit Database
+
 }

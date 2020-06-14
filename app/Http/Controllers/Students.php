@@ -25,7 +25,7 @@ class Students extends Controller
       $exam = Exams::where('course_code', 'like', '%'.$search.'%')->paginate(50);
 
       return view('dashboard.student',['bookings' => $exam]);
-      //return view('exambookings.dashboard',compact('posts'));
+      
 
     }
 }

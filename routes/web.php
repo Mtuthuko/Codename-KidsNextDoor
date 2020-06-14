@@ -19,11 +19,22 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 //Route::view('form', 'home');
 Route::post('submit', 'HomeController@save');
 
 Route::get('exambooking','HomeController@search');
 
+<<<<<<< HEAD
 Route::get('exam','Students@search');
 Route::post('/home','HomeController@search');
+=======
+Route::get('/home','HomeController@search');
+Route::get('booking',function(){
+    return redirect('/home')->with('success','Data Updated');
+});
+
+Route::get('/editpage/{id}','StudentController@editData')->name('editpage');
+Route::delete('/deletionpage/{id}','StudentController@destroyData')->name('deletionpage');
+Route::patch('/updatepage/{id}','StudentController@updateData')->name('updatepage');
+>>>>>>> 3df5ae785429484b61eda53fe4e99c7dd142aeaf

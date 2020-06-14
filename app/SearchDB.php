@@ -8,7 +8,7 @@ class SearchDB extends Model
 {
 
       //
-      protected $table = 'courses';
+      protected $table = 'Courses';
       public $timestamps = false;
 
 }
