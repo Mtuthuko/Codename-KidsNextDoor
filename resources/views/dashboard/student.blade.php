@@ -50,11 +50,11 @@
       <td>{{{$exam['duration']}}}</td>
       <td>{{{$exam['size']}}}</td>
       <td>{{{$exam['concurrent_exams']}}}</td>
-      
-  
-    </tr> 
+
+
+    </tr>
    @endforeach
-    
+
   </tbody>
 </table>
   </div>
