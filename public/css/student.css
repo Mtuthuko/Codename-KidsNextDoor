@@ -9,9 +9,40 @@
     width: 100%;
     border-radius: 5px 5px 0 0;
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 20px #009879;
   }
-  
+
+  .content-table th{
+    height: 50px;
+    font-size: 0.9em;
+    
+    background-color: #009879;
+  }
+  button.btn-primary{
+    width: 50px;
+    border-radius: 5px;
+   background-color: #009879;
+   border: #009879; 
+  }
+    
+label.search_label{
+  padding: 0.5em;
+}
+  div.input-group {
+    box-shadow: 0 0 20px #009879;
+    margin-top: 20px;
+    margin-left: 5px;
+    position: relative;
+    right:0px ;
+    font-size: 0.9em;
+      width: 30%;
+      border-radius: 5px;
+      background-color: #009879;
+      color: #ffffff;
+      font-weight: bold;
+      text-align: center;
+      
+  }
   .content-table thead tr {
     background-color: #009879;
     color: #ffffff;
@@ -19,7 +50,7 @@
     font-weight: bold;
   }
   
-  .content-table th,
+  
   .content-table td {
     text-align: center;
     padding: 16px 15px;
@@ -36,7 +67,8 @@
   }
 
   .content-table tbody tr:hover{
-    background-color: #012261ee;
+    box-shadow: 0 0 20px #009879;
+    background-color: #009879;
     color: white;
   }
   

@@ -15,7 +15,7 @@ use App\SearchDB;
 
 class HomeController extends Controller
 {
-    
+
     /**
      * Create a new controller instance.
      *
@@ -35,10 +35,10 @@ class HomeController extends Controller
     {
         /**
          * Get the user's role and display's the appropraite dashboard
-         * 
-         * returns an integer 
+         *
+         * returns an integer
          * 1 = student, 2 = faculty staff, 3 = ego staff
-         * 
+         *
          */
         $user_role = auth()->user()->user_role;
 
@@ -49,12 +49,13 @@ class HomeController extends Controller
         }
         elseif($user_role == '2')   //faculty staff
         {
-                   
+
             //This fetches all the venues from the database
-            $venues = Venue::all();
+            //$venues = Venue::all();
 
             //We return a view with venues
-            return view('home',['venues' => $venues]);
+            
+            return redirect('exambooking');
         }
         elseif($user_role == '3')   //EGO staff
         {
@@ -64,9 +65,25 @@ class HomeController extends Controller
             $home = new HomeController();
             //$this->egoDashboard();
         }
-        
+
     }
 
+     /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function egoDashboard()
+    {
+        $clashes = Clashes::all();
+        if($clashes != "")
+        {
+            return view('dashboard.ego',['clashes' => $clashes]);
+        }
+
+        return view('dashboard.ego',['clashes' => $clashes]);
+        //echo $user_role;
+    }
 
     //Fetch data from DB
     public function list($value='')
@@ -103,12 +120,18 @@ class HomeController extends Controller
     //Search Data on database
     public function search(Request $request)
     {
-      $search = $request->get('search');
-      
-      $posts = SearchDB::where('code', 'like', '%'.$search.'%')->paginate(50);
 
-      //return view('layouts.addcourses',compact('posts'));
-      return view('exambookings.dashboard',compact('posts'));
+        $search = $request->get('search');
+
+        $posts = SearchDB::where('code', 'like', '%'.$search.'%')->paginate(50);
+
+        //return view('layouts.addcourses',compact('posts'));
+       return view('exambookings.dashboard',compact('posts'));
+
+
 
     }
+
+    //edit Database
+
 }
