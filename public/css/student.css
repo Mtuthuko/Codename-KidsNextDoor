@@ -11,6 +11,13 @@
     overflow: hidden;
     box-shadow: 0 0 20px #009879;
   }
+
+  .content-table th{
+    height: 50px;
+    font-size: 0.9em;
+    
+    background-color: #009879;
+  }
   button.btn-primary{
     width: 50px;
     border-radius: 5px;
