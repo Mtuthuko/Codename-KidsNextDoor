@@ -25,4 +25,5 @@ Route::post('submit', 'HomeController@save');
 
 Route::get('exambooking','HomeController@search');
 
+Route::get('exam','Students@search');
 Route::post('/home','HomeController@search');

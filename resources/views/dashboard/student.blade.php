@@ -9,7 +9,7 @@
 <h1 style="text-align: center">
     EXAMS SCHEDULE
 </h1>
-  <form class="lookup-form" action="exambooking" method="get">
+  <form class="lookup-form" action="exam" method="get">
       <div class="input-group">
         <label for="search " class="search_label" >Enter CourseCode</label>
         <input type="search" name="search" class="form-control" placeholder="Enter Course Code">
