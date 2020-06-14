@@ -19,15 +19,16 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 //Route::view('form', 'home');
 Route::post('submit', 'HomeController@save');
 
 Route::get('exambooking','HomeController@search');
 
 Route::get('exam','Students@search');
-Route::post('/home','HomeController@search');
+//Route::post('/home','HomeController@search');
 Route::get('/home','HomeController@search');
+//Route::get('/home','HomeController@search');
 Route::get('booking',function(){
     return redirect('/home')->with('success','Data Updated');
 });
