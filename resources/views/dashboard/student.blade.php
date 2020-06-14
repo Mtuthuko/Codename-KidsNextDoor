@@ -20,6 +20,7 @@
 </button>
         </span>
       </div>
+</form>
 
 <div style="overflow-x:auto;">
 <table class="content-table">

@@ -54,7 +54,8 @@ class HomeController extends Controller
             //$venues = Venue::all();
 
             //We return a view with venues
-             return view('exambookings.dashboard');
+            
+            return redirect('exambooking');
         }
         elseif($user_role == '3')   //EGO staff
         {
@@ -119,19 +120,14 @@ class HomeController extends Controller
     //Search Data on database
     public function search(Request $request)
     {
-      if(strlen($request) > 2)
-      {
+
         $search = $request->get('search');
 
         $posts = SearchDB::where('code', 'like', '%'.$search.'%')->paginate(50);
 
         //return view('layouts.addcourses',compact('posts'));
        return view('exambookings.dashboard',compact('posts'));
-      }
-      else
-       {
-        echo "PLEASE SEARCH BY COURSE CODE";
-      }
+
 
 
     }
