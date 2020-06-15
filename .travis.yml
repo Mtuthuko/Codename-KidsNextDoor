@@ -69,6 +69,7 @@ script:
   - ./vendor/bin/phpunit --coverage-clover ./tests/logs/clover.xml
   - vendor/bin/phpunit --coverage-text
   - vendor/bin/phpunit --coverage-html -v
+  - vendor/bin/phpunit --testsuite Feature
   - jshint resources/assets/js/modules/*
   - bash <(curl -s https://codecov.io/bash) -t 44478cf8-e308-4f33-b8c4-8783cd5aebc3
 
@@ -76,5 +77,6 @@ script:
 after script:
   - php vendor/bin/coveralls -v
   - php vendor/bin/php-coveralls -v
-  - php vendor/bin/php-coveralls -v
+  - vendor/bin/phpunit --testsuite Feature
+  - vendor/bin/phpunit --coverage-clover=coverage.xml
   - bash <(curl -s https://codecov.io/bash) -t 44478cf8-e308-4f33-b8c4-8783cd5aebc3
