@@ -55,19 +55,17 @@
 
       <table class="content-table">
         <tr>
-          <th>id</th>
-          <th>Cousecode</th>
+          <th>Cousre code</th>
           <th>Course Name</th>
           <th>Size</th>
           <th>Special Req : Table</th>
-          <th>Special Req : Vanue</th>
+          <th>Special Req : Venue</th>
           <th>Edit</th>
           <th>Delete</th>
         </tr>
 
         @foreach($posts as $row)
           <tr>
-            <td>{{$row['id']}}</td>
             <td>{{$row['code']}}</td>
             <td>{{$row['name']}}</td>
             <td>{{$row['size']}}</td>
