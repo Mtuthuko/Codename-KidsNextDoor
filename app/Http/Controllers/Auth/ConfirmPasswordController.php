@@ -34,11 +34,11 @@ class ConfirmPasswordController extends Controller
      *
      * @return void
      */
-     // @codeCoverageIgnoreStart
+// @codeCoverageIgnoreStart
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-  // @codeCoverageIgnoreEnd
+// @codeCoverageIgnoreEnd
 }
