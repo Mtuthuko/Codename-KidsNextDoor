@@ -13,15 +13,19 @@
                 <link href="/css/loader.css" rel="stylesheet">
 
 
+                
                   <div class="loader-wrapper">
-
 
                     <ul style="align-self:center;padding:0 2px; font-size: 40px;">
 
                       <ul>
-                      <img  src ="https://www.wits.ac.za/media/wits-university-style-assets/images/wits-logo.png" alt="wits logo">
+                    <div style="width: 72% ; padding:45px;background-color:rgba(150, 150, 150, 0.6) ; border-radius:10px">
+
+                      <img  src ="https://www.wits.ac.za/media/wits-university-style-assets/images/wits-logo.png " alt="wits logo">
+
+                    </div>
                     </ul>
-                    <div class="title m-b-md">
+                    <div class="title m-b-md" style="font-weight: bold;">
                       Exam Scheduler -
                       @if (Route::has('login'))
                         <!--  <div class="top-right links">-->
@@ -46,13 +50,9 @@
 
                         </span>
 
-
-
                     </ul>
-
-
-
                   </div>
+                  
 
                   <!--Loading cube-->
                   <script>

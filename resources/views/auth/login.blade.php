@@ -7,7 +7,11 @@
         <div class="col-md-8">
             <div class="card">
                 <!--<div class="card-header">{{ __('Login') }}</div>-->
+                <div style="width: 75% ; padding:50px;background-color:rgba(150, 150, 150, 0.6) ; border-radius:10px">
+
                 <img  src ="https://www.wits.ac.za/media/wits-university-style-assets/images/wits-logo.png" alt="wits logo">
+
+                </div>
                 <div class="title m-b-md">
                   Exam Scheduler - Login
                 </div>
