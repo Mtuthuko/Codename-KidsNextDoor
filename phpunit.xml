@@ -15,12 +15,8 @@
     </testsuites>
     <filter>
         <whitelist >
-            <directory >./app/Providers</directory>
+            <directory suffix=".php">./app</directory>
         </whitelist>
-        <blacklist>
-            <file>BroadcastServiceProvider.php</file>
-        </blacklist>
-
 
     </filter>
 

@@ -27,7 +27,7 @@ Route::post('submit', 'HomeController@save');
 
 Route::get('exambooking','HomeController@search');
 
-Route::post('/home','HomeController@search');
+//Route::post('/home','HomeController@search');
 
 //CRUD implemented routes
 Route::get('/home/clashes/{id}/edit','ClashesController@edit')->name('editclash');
