@@ -66,7 +66,7 @@
                             <p> {{{$item['details']}}}</p>
 
                             <p class="clash-date">
-                                Created on: {{{$item['clash_created']}}}
+                                Resolved on: {{{$item['resolved_date']}}}
                             </p>
                         </div>
                         <div class="btn-view-clash"><a href="{{route('editclash',$item['id'])}}"> View details<a> </div>
