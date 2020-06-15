@@ -23,8 +23,10 @@ class Kernel extends ConsoleKernel
      * @return void
      */
 
+// @codeCoverageIgnoreStart
     protected function schedule(Schedule $schedule)
     {
+// @codeCoverageIgnoreEnd
       // @codeCoverageIgnoreStart
           // $schedule->command('inspire')->hourly();
       // @codeCoverageIgnoreEnd
