@@ -14,16 +14,16 @@
 
     </testsuites>
     <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./app</directory>
+        <whitelist >
+            <directory >./app/Providers</directory>
         </whitelist>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./routes</directory>
-        </whitelist>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./resources</directory>
-        </whitelist>
+        <blacklist>
+            <file>BroadcastServiceProvider.php</file>
+        </blacklist>
+
+
     </filter>
+
     <php>
         <server name="APP_ENV" value="testing"/>
         <server name="BCRYPT_ROUNDS" value="4"/>

@@ -28,22 +28,35 @@
         <testsuite name="PHP Coveralls component test suite">
             <directory>./tests/</directory>
         </testsuite>
+
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./tests/Feature</directory>
+        </testsuite>
     </testsuites>
 
     <filter>
-        <whitelist>
+          <whitelist>
             <directory>./src</directory>
-            <exclude>
-                <directory>./build</directory>
-                <directory>./composer</directory>
-                <directory>./tests</directory>
-                <directory>./vendor</directory>
-            </exclude>
-        </whitelist>
+          </whitelist>
+          <whitelist>
+            <directory>./build</directory>
+          </whitelist>
+          <whitelist>
+            <directory>./composer</directory>
+          </whitelist>
+          <whitelist>
+            <directory>./vendor</directory>
+          </whitelist>
     </filter>
 
     <logging>
         <log type="coverage-clover" target="build/logs/clover.xml"/>
+
+        <log type="coverage-clover" target="clover.xml"/>
+
         <log type="junit" target="build/logs/junit.xml" logIncompleteSkipped="false"/>
     </logging>
 </phpunit>
