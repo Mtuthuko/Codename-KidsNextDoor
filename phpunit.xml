@@ -27,17 +27,17 @@
           <file>/app/Http/Controllers/ClashesController.php</file>
           <file>/app/Http/Controllers/StudentController.php</file>
           <file>/app/Http/Controllers/Students.php</file>
-          </exclude>
-          <directory suffix=".php">/app/Http/Controllers/</directory>
-          <file>/app/Http/Controllers/StudentController.php</file>
-          </exclude>
-          <directory suffix=".php">/app/Http/Controllers/</directory>
-          <file>/app/Http/Controllers/Students.php</file>
         </exclude>
-          <exclude>
-          <directory suffix=".php">/app/Http/Middleware</directory>
-          <file>/app/Http/Middleware/Authenticate.php</file>
-          </exclude>
+        <exclude>
+        <directory suffix=".php">/app/Http/Middleware</directory>
+        <file>/app/Http/Middleware/Authenticate.php</file>
+        </exclude>
+
+        <exclude>
+        <directory suffix=".php">/app/Http/Controllers/</directory>
+        <file>/app/Http/Controllers/StudentController.php</file>
+        <file>/app/Http/Controllers/Students.php</file>
+      </exclude>
 
 
 
