@@ -23,6 +23,8 @@ class Kernel extends ConsoleKernel
      * @return void
      */
 // @codeCoverageIgnoreStart
+// @codeCoverageIgnoreEnd
+// @codeCoverageIgnoreStart
     protected function schedule(Schedule $schedule)
     {
 // @codeCoverageIgnoreEnd
