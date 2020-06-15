@@ -42,6 +42,41 @@
         </div>
 
         <div class="form-group">
+          <label >Duration</label>
+
+              <select  name="duration"  id ="duration">
+                    <option  value="1H" >1H</option>
+                    <option value="2H">2H</option>
+                    <option value="3H">3H</option>
+                    <option value="4H">4H</option>
+                    <option value="5H">5H</option>
+                    <option value="6H">6H</option>
+                    <option value="7H">7H</option>
+                    <option value="8H">8H</option>
+                </select>
+
+        </div>
+
+        <div class="form-group">
+          <label >Paper Number</label>
+
+              <select  name="paperno"  id ="paperno">
+                    <option  value="1" ></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+
+        </div>
+
+        <div class="form-group">
           <label >Type Of Table</label>
 
               <select  name="special_request_table"  id ="special_request_table">

@@ -59,6 +59,8 @@
           <th>Course Name</th>
           <th>Size</th>
           <th>AM/PM</th>
+          <th>Duration</th>
+          <th>PaperNumber</th>
           <th>Special Req : Table</th>
           <th>Special Req : Venue</th>
           <th>Edit</th>
@@ -71,6 +73,8 @@
             <td>{{$row['name']}}</td>
             <td>{{$row['size']}}</td>
             <th>{{$row['time']}}</th>
+            <th>{{$row['duration']}}</th>
+            <th>{{$row['paperno']}}</th>
             <td>{{$row['special_request_table']}}</td>
             <td>{{$row['special_request_vanue']}}</td>
             <td><a href="{{route('editpage',$row['id'])}}"><button>Edit</button></a></td>
