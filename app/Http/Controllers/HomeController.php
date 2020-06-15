@@ -62,27 +62,9 @@ class HomeController extends Controller
             $clashes = Clashes::all();
 
             return view('dashboard.ego',['clashes' => $clashes]);
-            $home = new HomeController();
-            //$this->egoDashboard();
+            
         }
 
-    }
-
-     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function egoDashboard()
-    {
-        $clashes = Clashes::all();
-        if($clashes != "")
-        {
-            return view('dashboard.ego',['clashes' => $clashes]);
-        }
-
-        return view('dashboard.ego',['clashes' => $clashes]);
-        //echo $user_role;
     }
 
     //Fetch data from DB

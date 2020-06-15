@@ -84,13 +84,14 @@ class ClashesController extends Controller
         // code...
         //print_r($req->input());
         //SQL CODE TO UPLOAD TO DB
-        $clash = new Clashes;
+        $clash = Clashes::find($id);
+        
         $clash->clash_status = $req->get('status');
 
         $clash->clash_status;
         //$clash->resolved_date= \;
 
-        //$clash->update;
+        $clash->save;
 
             
         return redirect()->route('home') ;

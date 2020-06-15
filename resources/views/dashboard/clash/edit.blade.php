@@ -15,7 +15,7 @@
     <h1 style="margin-top: 10px;color: rgba(0, 0, 0, 0.9)" >Clash Detials</h1>
 
     
-<form action="?update"  method="put" class="form-clash"> 
+<form action="{{route('updateclash')}}"  method="post" class="form-clash"> 
             <div class="edit-clash">
                 @foreach ($clashes as $item)
                 <div class="clash-detials">

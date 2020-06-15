@@ -31,7 +31,7 @@
                             Created on: {{{$item['clash_created']}}}
                         </p>
                     </div>
-                <div class="btn-view-clash"><a href="/home/clash/{{{$item['id']}}}/edit"> View details<a> </div>
+                <div class="btn-view-clash"><a href="{{route('editclash',$item['id'])}}"> View details<a> </div>
                 </div>
              @endif
             
@@ -69,7 +69,7 @@
                                 Created on: {{{$item['clash_created']}}}
                             </p>
                         </div>
-                        <div class="btn-view-clash"><a href="/home/clashes/{{{$item['id']}}}/edit"> View details<a> </div>
+                        <div class="btn-view-clash"><a href="{{route('editclash',$item['id'])}}"> View details<a> </div>
                     </div>
                 @endif  
             @endforeach
