@@ -43,6 +43,7 @@ class StudentController extends Controller
 
     $student = SearchDB::find($id);
     $student->size=$request->get('size');
+    $student->time=$request->get('time');
     $student->special_request_table=$request->get('special_request_table');
     $student->special_request_vanue=$request->get('special_request_vanue');
     $student->save();

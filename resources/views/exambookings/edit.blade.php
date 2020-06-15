@@ -30,6 +30,18 @@
         </div>
 
         <div class="form-group">
+          <label >Special Request Slot AM/PM</label>
+
+              <select  name="time"  id ="time">
+                    <option  value="Any Available slot" ></option>
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+
+                </select>
+
+        </div>
+
+        <div class="form-group">
           <label >Type Of Table</label>
 
               <select  name="special_request_table"  id ="special_request_table">
