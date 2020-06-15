@@ -5,6 +5,7 @@ language: php
 
 php:
   - '7.2'
+  - '7.3'
 
 env:
     - ILLUMINATE_VERSION=5.1.* PHPUNIT_VERSION=~4.0
