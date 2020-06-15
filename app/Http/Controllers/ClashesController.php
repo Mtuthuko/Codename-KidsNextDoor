@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Clashes;
+use DateTime;
 
 class ClashesController extends Controller
 {
@@ -85,17 +87,22 @@ class ClashesController extends Controller
         //print_r($req->input());
         //SQL CODE TO UPLOAD TO DB
         $clash = Clashes::find($id);
+
+        echo $clash;
         
+        $timestamp = date('Y-m-d H:i:s');
+        $user_id = auth()->user()->id;
+
         $clash->clash_status = $req->get('status');
+        $clash->user_id = $user_id;
+        $clash->resolved_date = $timestamp;
 
-        $clash->clash_status;
-        //$clash->resolved_date= \;
-
-        $clash->save;
-
+        $clash->save();
             
-        return redirect()->route('home') ;
+        //return view($clash);
+        return redirect('/home');
     }
+
 
     /**
      * Remove the specified resource from storage.

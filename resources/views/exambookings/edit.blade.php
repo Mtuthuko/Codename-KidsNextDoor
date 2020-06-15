@@ -42,7 +42,7 @@
         </div>
 
         <div class="form-group">
-          <label >Vanue Request</label>
+          <label >Venue Request</label>
           <input type="text" name="special_request_vanue" class="form-control" value="{{$student->special_request_vanue}}" placeholder="Enter Name of vanue or Type None if no special vanue is required" />
 
         </div>

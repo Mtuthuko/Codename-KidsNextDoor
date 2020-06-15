@@ -14,10 +14,12 @@
 <div class="dash_main_body">
     <h1 style="margin-top: 10px;color: rgba(0, 0, 0, 0.9)" >Clash Detials</h1>
 
-    
-<form action="{{route('updateclash')}}"  method="post" class="form-clash"> 
-            <div class="edit-clash">
-                @foreach ($clashes as $item)
+    @foreach ($clashes as $item)
+<form action="{{route('updateclash',$item['id'])}}"  method="post" class="form-clash"> 
+    {{csrf_field()}}
+        <input type="hidden" name="_method" value="PATCH" />
+    <div class="edit-clash">
+
                 <div class="clash-detials">
                     <h1>Detials:</h1>
                    <h3> {{{$item['details']}}} <h3>
@@ -28,10 +30,9 @@
                     <p> Date created: {{{$item['clash_created']}}}</p>
                     <p> Date resolved: {{{$item['resolved_date']}}}</p>       
                 </div>
-
                 <div class="clash-controls" >
                     <label for="Selector"><h1 class="black-font">Change status:</h1></label>
-                    <select  class="clash-selector" >
+                    <select  class="clash-selector" name="status">
                     <option value="{{{$item['clash_status']}}}">STATUS</option>
                         <option value="1">Unresolved</option>
                         <option value="0">Resolved</option>

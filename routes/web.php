@@ -34,8 +34,6 @@ Route::get('/home/clashes/{id}/edit','ClashesController@edit')->name('editclash'
 Route::patch('/home/clashes/{id}','ClashesController@update')->name('updateclash');
 
 
-Route::post('/home/update', 'ClashesController@update')->name('updateclash');
-
 Route::get('/editpage/{id}','StudentController@editData')->name('editpage');
 Route::delete('/deletionpage/{id}','StudentController@destroyData')->name('deletionpage');
 Route::patch('/updatedate/{id}','StudentController@updateData')->name('updatepage');
