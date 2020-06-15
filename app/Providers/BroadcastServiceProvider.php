@@ -12,14 +12,14 @@ class BroadcastServiceProvider extends ServiceProvider
      *
      * @return void
      */
-  // @codeCoverageIgnoreStart
+// @codeCoverageIgnoreStart
     public function boot()
-  // @codeCoverageIgnoreEnd
     {
         Broadcast::routes();
-      // @codeCoverageIgnoreStart
+
         require base_path('routes/channels.php');
-      // @codeCoverageIgnoreEnd
+
     }
+// @codeCoverageIgnoreEnd
 
 }
