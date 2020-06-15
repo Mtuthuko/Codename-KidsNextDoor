@@ -12,6 +12,7 @@ class Kernel2 extends ConsoleKernel
      *
      * @var array
      */
+     // @codeCoverageIgnoreStart
     protected $commands = [
         //
     ];
@@ -38,4 +39,5 @@ class Kernel2 extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
+   // @codeCoverageIgnoreStart
 }

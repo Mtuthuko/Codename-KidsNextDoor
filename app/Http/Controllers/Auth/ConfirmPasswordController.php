@@ -18,6 +18,7 @@ class ConfirmPasswordController extends Controller
     | this trait and override any functions that require customization.
     |
     */
+    // @codeCoverageIgnoreStart
 
     use ConfirmsPasswords;
 
@@ -33,8 +34,11 @@ class ConfirmPasswordController extends Controller
      *
      * @return void
      */
+     // @codeCoverageIgnoreStart
     public function __construct()
     {
         $this->middleware('auth');
     }
+
+  // @codeCoverageIgnoreEnd
 }

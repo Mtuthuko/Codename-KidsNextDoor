@@ -36,6 +36,8 @@ class RegisterController extends Controller
      *
      * @return void
      */
+
+     // @codeCoverageIgnoreStart
     public function __construct()
     {
         $this->middleware('guest');
@@ -73,4 +75,6 @@ class RegisterController extends Controller
 
         ]);
     }
+
+   // @codeCoverageIgnoreEnd
 }

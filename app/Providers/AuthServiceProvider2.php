@@ -21,10 +21,12 @@ class AuthServiceProvider2 extends ServiceProvider
      *
      * @return void
      */
+      // @codeCoverageIgnoreStart
     public function boot()
     {
         $this->registerPolicies();
 
         //
     }
+  // @codeCoverageIgnoreEnd
 }
