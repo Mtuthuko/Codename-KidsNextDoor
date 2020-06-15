@@ -17,6 +17,9 @@
         <whitelist >
             <directory >./app/Providers</directory>
         </whitelist>
+        <blacklist>
+            <file>BroadcastServiceProvider.php</file>
+        </blacklist>
 
 
     </filter>
