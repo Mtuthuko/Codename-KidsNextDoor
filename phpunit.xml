@@ -15,10 +15,10 @@
     </testsuites>
     <filter>
         <whitelist >
-            <directory >./app</directory>
+            <directory >./app/Providers</directory>
         </whitelist>
 
-      
+
     </filter>
 
     <php>
