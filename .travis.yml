@@ -65,8 +65,8 @@ before_script:
 
 script:
 
-  - phpunit --coverage-clover build/logs/clover.xml
-  - ./vendor/bin/phpunit --coverage-clover ./tests/logs/clover.xml
+  - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+  - vendor/bin/phpunit --coverage-clover ./tests/logs/clover.xml
   - vendor/bin/phpunit --coverage-text
   - vendor/bin/phpunit --coverage-html -v
   - vendor/bin/phpunit --testsuite Feature
