@@ -69,10 +69,11 @@ script:
   - vendor/bin/phpunit --coverage-text
   - vendor/bin/phpunit --coverage-html -v
   - jshint resources/assets/js/modules/*
+  - bash <(curl -s https://codecov.io/bash) -t 44478cf8-e308-4f33-b8c4-8783cd5aebc3
 
 
 after script:
   - php vendor/bin/coveralls -v
   - php vendor/bin/php-coveralls -v
-  - travis_retry php vendor/bin/php-coveralls -v
-  
+  - php vendor/bin/php-coveralls -v
+  - bash <(curl -s https://codecov.io/bash) -t 44478cf8-e308-4f33-b8c4-8783cd5aebc3
