@@ -84,7 +84,10 @@ nor the gold is presented as an official Wits palette.
 - **Buttons:** `ix-btn` plus `ix-btn-primary` (navy), `ix-btn-secondary`
   (outlined navy), `ix-btn-danger` (Delete), `ix-btn-quiet` (a dashed
   placeholder that must never look like a working action), `ix-btn-block`.
-  The front door has `ix-btn-foil`.
+  Inside a table row, `ix-btn-danger` is a quiet text action (ink-2 word and
+  bin, red on its tint only on hover and focus), so a column of Deletes never
+  outshouts the data; Edit stays the outlined row action. The front door has
+  `ix-btn-foil`.
 - **Forms:** `ix-field` > `ix-label` + `ix-input` / `ix-select`, errors in
   `ix-field-error` (tied with `aria-describedby`), `ix-check` for checkboxes,
   `ix-search` for the course-code search.
@@ -94,7 +97,10 @@ nor the gold is presented as an official Wits palette.
   Chips: `ix-chip`, `ix-chip-slot` (AM/PM), `ix-chip-any`. Status:
   `ix-status--unresolved` / `--resolved` with a seal icon. Counts: `ix-count`.
 - **Signature details:** `ix-day-rule` (the engraved 08:00–20:00 scale under an
-  exam time), `mark.ix-hit` (the foil search match).
+  exam time), `mark.ix-hit` (the foil search match). On the welcome sheet each
+  role carries one of these app glyphs engraved in foil (`ix-band-glyph`: the
+  day-rule, the AM and PM chips, the clash and resolved seals), decorative and
+  `aria-hidden`.
 - **Board:** `ix-board`, `ix-lane`, `ix-clash` cards (the drag hooks
   `draggable`, `ondragstart="drag(event)"` and `#resolved` must stay exactly).
 - **Panels and empty states:** `ix-panel`, `ix-panel--cert` (the certificate
@@ -104,14 +110,32 @@ nor the gold is presented as an official Wits palette.
 
 - **One authored moment:** the Rosette Lift on the first welcome visit of a
   session (GSAP 3.13 from cdnjs). The rosette engraves itself, the plate and
-  title arrive, then it tips back and separates into four depth layers while a
-  foil glint crosses it (about 2.8s, once; any key or tap skips it). The Login
-  button is never hidden or dimmed.
+  title arrive, then it tips back 14 degrees and separates into four depth
+  layers while a foil glint crosses it (about 2.8s, once; any key or tap skips
+  it). The Login button is never hidden or dimmed.
+- **Depth is drawn in 2D:** the stage is one flat plane tipped back under the
+  cover's 1400px perspective, and each layer takes the scale and offset a real
+  projection gives it (`DEPTH` in `front-door.js`: ring 150px behind, outer
+  72px behind, foil 52px in front; deeper sits smaller and lower). The CSS rest
+  pose in `intaglio-front.css` is the same model at 14 degrees. Real
+  `preserve-3d` layers cost every other frame at 1440px, so don't bring it back.
+- **At rest the depth stays alive:** as the cover scrolls away the plane tips
+  from 14 to 24 degrees and the layers spread apart; a fine pointer turns the
+  whole plane a few degrees (compositor-only). Layers get their own compositor
+  layer only while their pose changes, then paint back into the stage, so an
+  idle cover is one layer. The rosette has no `data-depth`: the kit's pointer
+  parallax would repaint the whole engraving on every pointer move.
+- **The cover's edge:** `.ix-cover::after` fades the engraving into the night
+  before the clip line, so a ring never stops on a straight edge.
 - **App pages:** CSS only, 150–250ms state changes (colour, background, the
   dropdown, the search mark drawing in once). No page-load choreography.
 - **Reduced motion:** no timeline, tilt, parallax or view transition; the
   rosette is drawn complete and still at its 3D rest tilt; the falcon starts
   paused. Content is identical with or without motion or JavaScript.
+- **Paused by the visitor:** when the pause button has been used (the kit
+  stores `living-layer` = `off`), the head's motion gate adds neither
+  `motion` nor `door-intro`, so the intro never plays and the plane holds
+  still.
 
 ## The falcon (Living Layer)
 
@@ -125,10 +149,10 @@ intaglio ink over paper, gold foil over night (`colors` and `colorsOnDark`).
 
 | Page | How |
 |---|---|
-| Welcome `/` | Full falcon with sparse gold dust; perches beside the title (screens 600px and wider), on the Login button's corner, and beside the role names |
-| Login | Calm falcon; it goes to the card title as soon as a field has focus and stays there, clear of the form |
+| Welcome `/` | Full falcon with gold dust; perches beside the title (screens 600px and wider), on the Login button's corner, and beside the role names; on phones it cruises in the clear night above the plate |
+| Login | Calm falcon; it goes to the card title ("Exam Scheduler", with "– Login" on its own line) as soon as a field has focus and stays there, clear of the form and the keyline |
 | Student or faculty page with **no rows** | Calm, no dust, perches beside the empty-state title |
-| EGO board with **no unresolved clash** | Calm, no dust, perches on "No unresolved clashes" and celebrates once per browser session |
+| EGO board with **no unresolved clash** | Calm, no dust, flies straight in to "No unresolved clashes" and celebrates once per browser session (about 3s after load) |
 
 It never appears on tables, forms, the board with work on it, the edit page,
 the clash form, register or the password pages. Dragging a card never
@@ -136,15 +160,18 @@ celebrates, because a drag saves nothing.
 
 **How to change it:** options live in `LivingLayer.init({...})` calls:
 
-- `public/js/front-door.js`: welcome (`size: 60`, dust `amount: 0.3`) and login
-  (`size: 56`, `calm: true`). Change `character`, `size`, `dust`, `perch` or
-  `introDelay` there.
-- `public/js/app-living.js`: the app empty states (`size: 52`, `calm: true`,
+- `public/js/front-door.js`: welcome (`size: 72`, dust `amount: 0.5`, phone
+  `lane`) and login (`size: 64`, `calm: true`). Change `character`, `size`,
+  `dust`, `perch` or `introDelay` there. Phones get 80% of each size.
+- `public/js/app-living.js`: the app empty states (`size: 58`, `calm: true`,
   `dust: false`, and a cruising `lane` beside the empty-state title).
-- Palettes (`INK`, `FOIL`, `DUST`, `TOGGLE`) are at the top of both files.
+- Palettes (`INK`, `FOIL`, `DUST`, `TOGGLE`) are at the top of both files. On
+  paper the falcon's tail and wingtips are ink-3 (`secondary: '#5B6680'`), so
+  the barred tail reads on porcelain.
 - Mark perch spots in Blade with `data-perch` (or `data-perch="corner"` for a
-  button). 3D touches: `data-depth` on the rosette layers, `data-reveal-3d` on
-  the welcome bands, `data-magnetic` on the cover button.
+  button). 3D touches: `data-reveal-3d` on the welcome bands and
+  `data-magnetic` on the cover button; the rosette's depth is
+  `front-door.js`'s own model (see Motion).
 - Every page that loads the kit has the round pause button bottom-right
   ("Moving effects"); the visitor's choice is remembered.
 - To update the kit, copy the shared `living-layer.js` over
