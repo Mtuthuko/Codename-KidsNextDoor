@@ -11,7 +11,8 @@
   if (!window.LivingLayer) return;
 
   // Two palettes from the Intaglio tokens: navy intaglio ink on paper, gold foil over night and navy.
-  var INK  = { primary: '#22366A', secondary: '#AEB9CF', accent: '#D2AD62', dark: '#0A1631', light: '#F6F7F9' };
+  // On paper the tail and wingtips are ink-3 (5.4:1 on porcelain), so the barred tail reads.
+  var INK  = { primary: '#22366A', secondary: '#5B6680', accent: '#D2AD62', dark: '#0A1631', light: '#F6F7F9' };
   var FOIL = { primary: '#D2AD62', secondary: '#E3C47F', accent: '#F6F7F9', dark: '#8A6418', light: '#F6F7F9' };
   var TOGGLE = { position: 'bottom-right', bg: '#0A1631', fg: '#D2AD62', line: 'rgba(210,173,98,.55)', label: 'Moving effects' };
 
@@ -29,7 +30,7 @@
   }
 
   var api = window.LivingLayer.init({
-    character: 'falcon', look: 'rich', finish: 'foil', size: 52, calm: true, dust: false, side: side, lane: lane,
+    character: 'falcon', look: 'rich', finish: 'foil', size: 58, calm: true, dust: false, side: side, lane: lane,
     colors: INK, colorsOnDark: FOIL, zIndex: 60, toggle: TOGGLE, intro: true, introDelay: 900
   });
   if (!api) return;
@@ -41,15 +42,20 @@
   try { done = window.sessionStorage.getItem(KEY) === '1'; } catch (e) { /* storage blocked */ }
   if (done) return;
 
-  // celebrate() does nothing before the intro has landed, so wait until the falcon has perched.
+  // The falcon flies straight in and lands on "No unresolved clashes" (the login focus guard's
+  // pattern: visit() before the intro only sets where it will fly), then celebrates once it has
+  // perched, about 2.5 s after load, so the reward reads as one. celebrate() does nothing before
+  // the intro has started, hence the wait for 'perched'; 20 s is only a safety net.
+  var spot = document.querySelector('[data-celebrate] [data-perch]');
+  if (spot) api.visit(spot);
   var tries = 0, timer = setInterval(function () {
     var s = api.state();
     if (s.enabled && s.mode === 'perched') {
       clearInterval(timer);
       api.celebrate();
       try { window.sessionStorage.setItem(KEY, '1'); } catch (e) { /* storage blocked */ }
-    } else if (++tries > 40) {
-      clearInterval(timer);   // gives up after 10 s (250 ms x 40)
+    } else if (++tries > 80) {
+      clearInterval(timer);   // gives up after 20 s (250 ms x 80)
     }
   }, 250);
 })();

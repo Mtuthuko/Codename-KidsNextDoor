@@ -142,8 +142,8 @@ body.ix .ix-appbar .dropdown-menu :focus-visible{outline:2px solid var(--navy);o
   font:500 .9375rem/1 var(--sans);text-decoration:none;white-space:nowrap}
 .ix .ix-menu-item:hover,.ix .ix-menu-item:focus,.ix .ix-menu-item:active{background:var(--surface-2);color:var(--ink);text-decoration:none}
 
-.ix-appfoot{box-sizing:border-box;max-width:1328px;margin:0 auto;padding:24px 24px 32px;border-top:1px solid var(--rule);
-  font:400 .8125rem/1.4 var(--sans);color:var(--ink-3)}
+.ix-appfoot{box-sizing:border-box;width:min(1280px,calc(100% - 48px));margin:0 auto;padding:24px 0 32px;border-top:1px solid var(--rule);
+  font:400 .8125rem/1.4 var(--sans);color:var(--ink-3)}   /* the rule spans the content column, not the gutters */
 
 @media (max-width:719.98px){
   .ix-appbar{height:60px}
@@ -151,12 +151,12 @@ body.ix .ix-appbar .dropdown-menu :focus-visible{outline:2px solid var(--navy);o
   .ix-plate-tab{height:54px;padding:8px 10px 9px}
   .ix-plate-tab img{width:104px}
   .ix-appbar-name{font-size:1.25rem}
+  .ix-appfoot{width:calc(100% - 32px);padding:20px 0 28px}
 }
 @media (max-width:559.98px){ .ix-appbar-name{display:none} }
 @media (max-width:480px){
   .ix-appbar-in{padding:0 16px}
   .ix-usermenu-name{max-width:72px}
-  .ix-appfoot{padding:20px 16px 28px}
 }
 @media (max-width:380px){
   .ix-appbar-in{padding:0 12px}
@@ -284,12 +284,25 @@ body.ix .ix-input.is-invalid:focus-visible,body.ix .ix-input[aria-invalid="true"
 .ix-row-actions form{display:contents}
 .ix-results{margin:-8px 0 16px;font:400 .9375rem/1.45 var(--sans);color:var(--ink-2)}
 .ix-results strong{color:var(--ink);font-weight:700}
+@media (max-width:719.98px){
+  .ix-results{margin-top:-14px;margin-bottom:10px}
+  .ix-results a{display:inline-flex;align-items:center;min-height:44px;padding:0 6px;vertical-align:middle;font-weight:600}   /* the way back from a search: a 44px target */
+}
 
-/* The faculty table carries nine columns and two row actions: long headers may wrap and cells run tighter */
-.ix-table--courses th,.ix-table--courses td{padding-left:12px;padding-right:12px}
-.ix-table--courses th:first-child,.ix-table--courses td:first-child{padding-left:16px}
-.ix-table--courses th:last-child,.ix-table--courses td:last-child{padding-right:16px}
-.ix-table--courses .ix-row-actions .ix-btn{padding:0 14px}
+/* The faculty table carries nine columns and two row actions: long headers may wrap and cells run tighter.
+   Tables only: below 720px the rows are cards whose cells sit flush. */
+@media (min-width:720px){
+  .ix-table--courses th,.ix-table--courses td{padding-left:12px;padding-right:12px}
+  .ix-table--courses th:first-child,.ix-table--courses td:first-child{padding-left:16px}
+  .ix-table--courses th:last-child,.ix-table--courses td:last-child{padding-right:16px}
+  .ix-table--courses .ix-row-actions .ix-btn{padding:0 14px}
+}
+
+/* Delete in a row is a quiet text action: twelve red outlines down the table were louder than the
+   data. Ink-2 word and bin at rest; unresolved red on its tint on hover and focus. One click, as before. */
+.ix-table .ix-btn-danger{background:transparent;border-color:transparent;color:var(--ink-2)!important}
+.ix-table .ix-btn-danger:hover,.ix-table .ix-btn-danger:focus-visible,.ix-table .ix-btn-danger:active{
+  background:var(--unresolved-tint);border-color:transparent;color:var(--unresolved)!important}
 
 /* The full student table from 1024px runs slightly tighter until there is room */
 @media (min-width:1024px) and (max-width:1279.98px){

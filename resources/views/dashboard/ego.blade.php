@@ -37,7 +37,7 @@
                         <div class="ix-clash-top"><span class="ix-status ix-status--unresolved">@include('partials.icon', ['name' => 'seal-clash'])Unresolved</span>@include('partials.icon', ['name' => 'grip', 'class' => 'ix-grip'])</div>
                         <p class="ix-clash-details">{{ $item['details'] }}</p>
                         <p class="ix-clash-meta">Created on: <span class="ix-t">{{ $item['clash_created'] }}</span></p>
-                        <a class="ix-clash-link" href="{{ route('editclash', $item['id']) }}" draggable="false"><span>View details</span>@include('partials.icon', ['name' => 'arrow-right'])</a>
+                        <a class="ix-clash-link" href="{{ route('editclash', $item['id']) }}" draggable="false"><span>View details</span><span class="ix-vh"> for {{ \Illuminate\Support\Str::limit($item['details'], 40) }}</span>@include('partials.icon', ['name' => 'arrow-right'])</a>
                     </div>
                 @endif
             @endforeach
@@ -67,7 +67,7 @@
                         <div class="ix-clash-top"><span class="ix-status ix-status--resolved">@include('partials.icon', ['name' => 'seal-check'])Resolved</span>@include('partials.icon', ['name' => 'grip', 'class' => 'ix-grip'])</div>
                         <p class="ix-clash-details">{{ $item['details'] }}</p>
                         <p class="ix-clash-meta">Resolved on: <span class="ix-t">{{ $item['resolved_date'] }}</span></p>
-                        <a class="ix-clash-link" href="{{ route('editclash', $item['id']) }}" draggable="false"><span>View details</span>@include('partials.icon', ['name' => 'arrow-right'])</a>
+                        <a class="ix-clash-link" href="{{ route('editclash', $item['id']) }}" draggable="false"><span>View details</span><span class="ix-vh"> for {{ \Illuminate\Support\Str::limit($item['details'], 40) }}</span>@include('partials.icon', ['name' => 'arrow-right'])</a>
                     </div>
                 @endif
             @endforeach
