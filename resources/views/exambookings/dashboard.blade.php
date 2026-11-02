@@ -1,104 +1,93 @@
 @extends('layouts.app')
 
-  <!-- Testing Code for new dashboard view -->
 @section('content')
-<link href="/css/student.css" rel="stylesheet">
-  <!-- Lookup function Form
-      "Look up a course in the data base"
--->
+@php $ixQ = trim((string) request('search')); @endphp
 
+{{-- Look up a course in the database --}}
+<div class="ix-page-head">
+    <h1 class="ix-h1">Exam Bookings</h1>
 
-  <div class="topnav">
-    <br>
-      <h1 align="center">Exam Bookings </h1>
-    <br>
-
-    <form class="lookup-form" action="exambooking" method="get">
-      <div class="input-group">
-        <label for="search " class="search_label" >Enter CourseCode</label>
-        <input type="search" name="search" class="form-control" placeholder="Enter Course Code">
-        <span class="input-group-prepend">
-          <button type="submit" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="17.49" height="17.49" viewBox="0 0 17.49 17.49">
-  <path id="ic_search_24px" d="M15.5,14h-.79l-.28-.27a6.51,6.51,0,1,0-.7.7l.27.28v.79l5,4.99L20.49,19Zm-6,0A4.5,4.5,0,1,1,14,9.5,4.494,4.494,0,0,1,9.5,14Z" transform="translate(-3 -3)"/>
-</svg>
-</button>
-        </span>
-      </div>
-
-
-
-
+    <form class="ix-search" action="exambooking" method="get" role="search">
+        <label class="ix-label" for="search">Enter course code</label>
+        <div class="ix-search-row">
+            <div class="ix-input-wrap">
+                @include('partials.icon', ['name' => 'search'])
+                <input id="search" type="search" name="search" class="ix-input ix-input-search" placeholder="Enter Course Code" value="{{ request('search') }}" autocomplete="off" spellcheck="false">
+            </div>
+            <button type="submit" class="ix-btn ix-btn-primary">@include('partials.icon', ['name' => 'search'])Search</button>
+        </div>
     </form>
+</div>
 
-  </div>
+@if ($ixQ !== '')
+    <p class="ix-results" v-pre>Results for “<strong>{{ request('search') }}</strong>” · <a href="{{ url('exambooking') }}">Show all</a></p>
+@endif
 
-
-
-
-  <br />
-  <!-- Fetch Data From DB
-      "Show CourseCode with the number of students registered for the course"
--->
-  <div class="row">
-    <div class="col-md-12">
-      <br />
-      <h2 align="center">Courses Data</h1>
-      <br />
-
-      <div style="overflow-x:auto;">
-
-        @if($message = Session::get('success'))
-          <div class="alert alert-success">
-            <p>{{$message}}</p>
-          </div>
-        @endif
-
-      <table class="content-table">
-        <tr>
-          <th>Cousre code</th>
-          <th>Course Name</th>
-          <th>Size</th>
-          <th>AM/PM</th>
-          <th>Duration</th>
-          <th>PaperNumber</th>
-          <th>Special Req : Table</th>
-          <th>Special Req : Venue</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-
-        @foreach($posts as $row)
-          <tr>
-            <td>{{$row['code']}}</td>
-            <td>{{$row['name']}}</td>
-            <td>{{$row['size']}}</td>
-            <th>{{$row['time']}}</th>
-            <th>{{$row['duration']}}</th>
-            <th>{{$row['paperno']}}</th>
-            <td>{{$row['special_request_table']}}</td>
-            <td>{{$row['special_request_vanue']}}</td>
-            <td><a href="{{route('editpage',$row['id'])}}"><button>Edit</button></a></td>
-            <td>
-              <form class="pull-right" action="{{route('deletionpage',$row['id'])}}" method="post">
-                {{csrf_field()}}
-                <input type="hidden" name="_method" value="DELETE" />
-                <button type="submit" class="btn btn-danger">Delete</button>
-
-              </form>
-            </td>
-          </tr>
-        @endforeach
-      </table>
-  </div>
-
+@if($message = Session::get('success'))
+    <div class="ix-banner ix-banner--success" role="status">
+        @include('partials.icon', ['name' => 'check-circle'])
+        <p>{{ $message }}</p>
     </div>
+@endif
 
-  </div>
+{{-- Course codes with the number of students registered for each course --}}
+<h2 class="ix-h2 ix-section-title">Courses Data</h2>
 
-
-
-
-
-
-
+<div class="ix-register" v-pre>
+@if (count($posts) === 0)
+    <div class="ix-empty">
+        <img class="ix-seal" src="/images/seal.svg" alt="" width="96" height="96">
+        @if ($ixQ !== '')
+            <h3 class="ix-empty-title" data-perch>No courses found for “{{ $ixQ }}”</h3>
+            <p class="ix-empty-text">Check the course code and search again.</p>
+            <a class="ix-btn ix-btn-secondary" href="{{ url('exambooking') }}">Show all courses</a>
+        @else
+            <h3 class="ix-empty-title" data-perch>No courses yet</h3>
+        @endif
+    </div>
+    @push('living')<script src="/js/living-layer.js" defer></script><script src="/js/app-living.js" defer></script>@endpush
+@else
+    <div class="ix-register-scroll ix-register-scroll--courses" role="region" aria-label="Courses Data" tabindex="0">
+        <table class="ix-table ix-table--courses" role="table">
+            <thead role="rowgroup">
+                <tr role="row">
+                    <th scope="col" role="columnheader">Course code</th>
+                    <th scope="col" role="columnheader">Course Name</th>
+                    <th scope="col" role="columnheader" class="ix-num">Size</th>
+                    <th scope="col" role="columnheader">AM/PM</th>
+                    <th scope="col" role="columnheader">Duration</th>
+                    <th scope="col" role="columnheader">Paper number</th>
+                    <th scope="col" role="columnheader">Special req: table</th>
+                    <th scope="col" role="columnheader">Special req: venue</th>
+                    <th scope="col" role="columnheader"><span class="ix-vh">Actions</span></th>
+                </tr>
+            </thead>
+            <tbody role="rowgroup">
+                @foreach($posts as $row)
+                    <tr role="row">
+                        <td role="cell" class="ix-c-code" data-label="Course code">@include('partials.code-mark', ['raw' => $row['code'], 'delay' => min($loop->index * 30, 240)])</td>
+                        <td role="cell" class="ix-c-name" data-label="Course name">{{ $row['name'] }}</td>
+                        <td role="cell" class="ix-c-size ix-num" data-label="Size">{{ $row['size'] }}</td>
+                        <td role="cell" class="ix-c-slot" data-label="AM/PM">@if ($row['time'] === 'AM' || $row['time'] === 'PM')<span class="ix-chip ix-chip-slot">{{ $row['time'] }}</span>@else<span class="ix-chip ix-chip-any">{{ $row['time'] }}</span>@endif</td>
+                        <td role="cell" class="ix-c-dur ix-t" data-label="Duration">{{ $row['duration'] }}</td>
+                        <td role="cell" class="ix-c-paper ix-t" data-label="Paper number">{{ $row['paperno'] }}</td>
+                        <td role="cell" class="ix-c-stable" data-label="Special req: table">@if (trim((string) $row['special_request_table']) === 'None')<span class="ix-none">{{ $row['special_request_table'] }}</span>@else{{ $row['special_request_table'] }}@endif</td>
+                        <td role="cell" class="ix-c-svenue" data-label="Special req: venue">@if (trim((string) $row['special_request_vanue']) === 'None')<span class="ix-none">{{ $row['special_request_vanue'] }}</span>@else{{ $row['special_request_vanue'] }}@endif</td>
+                        <td role="cell" class="ix-c-acts">
+                            <div class="ix-row-actions">
+                                <a class="ix-btn ix-btn-secondary" href="{{ route('editpage', $row['id']) }}">@include('partials.icon', ['name' => 'pencil'])Edit<span class="ix-vh"> {{ $row['code'] }}</span></a>
+                                <form class="ix-row-delete" action="{{ route('deletionpage', $row['id']) }}" method="post">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="ix-btn ix-btn-danger">@include('partials.icon', ['name' => 'trash'])Delete<span class="ix-vh"> {{ $row['code'] }}</span></button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+@endif
+</div>
 @endsection
