@@ -1,63 +1,51 @@
 @extends('layouts.app')
 
 @section('content')
+<h1 class="ix-h1">Dashboard EGO</h1>
 
-
-<title>Dashboard EGO</title>
-<link rel="stylesheet" href="/css/home.css">
-
-<h1 style="text-align: center;color:white">
-    Dashboard EGO
-</h1>
-
-
-<div class="dash_main_body">
-    <h1 style="margin-top: 10px;color: rgba(0, 0, 0, 0.9)" >Clash Detials</h1>
+<section class="ix-panel ix-case" aria-labelledby="case-title">
+    <h2 id="case-title" class="ix-panel-title">Clash Details</h2>
 
     @foreach ($clashes as $item)
-<form action="{{route('updateclash',$item['id'])}}"  method="post" class="form-clash"> 
-    {{csrf_field()}}
-        <input type="hidden" name="_method" value="PATCH" />
-    <div class="edit-clash">
+    <form action="{{ route('updateclash', $item['id']) }}" method="post" class="ix-case-form">
+        {{ csrf_field() }}
+        <input type="hidden" name="_method" value="PATCH">
 
-                <div class="clash-detials">
-                    <h1>Detials:</h1>
-                   <h3> {{{$item['details']}}} <h3>
-                </div>
-    
-                <div class="clash-dates">
-                    <h4>Dates:</h4>
-                    <p> Date created: {{{$item['clash_created']}}}</p>
-                    <p> Date resolved: {{{$item['resolved_date']}}}</p>       
-                </div>
-                <div class="clash-controls" >
-                    <label for="Selector"><h1 class="black-font">Change status:</h1></label>
-                    <select  class="clash-selector" name="status">
-                    <option value="{{{$item['clash_status']}}}">STATUS</option>
-                        <option value="1">Unresolved</option>
-                        <option value="0">Resolved</option>
-                        </select>>
-                </div>
-                @endforeach 
-                
-            <div class="clash-status">
-                <h2>Current Status:<h2>
-                @if ($item['clash_status'] == "0")
-                   <h2 class="statusOn">Resolved</h2>
-                @else
-                <h2 class="statusOff">Unresolved</h2>
-                @endif
-            </div>
+        <div class="ix-case-main">
+            <p class="ix-field-label">Details</p>
+            <p class="ix-case-details" v-pre>{{ $item['details'] }}</p>
 
-            <div>
-            <input type ="submit" value="UPDATE" class="dash_option btn-clash">
-            </div>
-            <div class="btn-back dash_option btn-clash ">
-                <a href="/home">Back</a>
-            </div>
-            </div>
+            <dl class="ix-case-dates">
+                <dt>Date created</dt>
+                <dd class="ix-t{{ ($item['clash_created'] === null || $item['clash_created'] === '') ? ' ix-empty-value' : '' }}">{{ $item['clash_created'] !== null && $item['clash_created'] !== '' ? $item['clash_created'] : '—' }}</dd>
+                <dt>Date resolved</dt>
+                <dd class="ix-t{{ ($item['resolved_date'] === null || $item['resolved_date'] === '') ? ' ix-empty-value' : '' }}">{{ $item['resolved_date'] !== null && $item['resolved_date'] !== '' ? $item['resolved_date'] : '—' }}</dd>
+            </dl>
+        </div>
 
-        </form>
-        
-</div>
+        <div class="ix-case-side">
+            <label class="ix-label" for="status">Change status</label>
+            <select id="status" class="ix-select" name="status">
+                <option value="{{ $item['clash_status'] }}">Keep current status</option>
+                <option value="1">Unresolved</option>
+                <option value="0">Resolved</option>
+            </select>
+        </div>
+    @endforeach
+
+        <div class="ix-case-status">
+            <p class="ix-label">Current Status</p>
+            @if ($item['clash_status'] == "0")
+                <span class="ix-status ix-status--resolved">@include('partials.icon', ['name' => 'seal-check'])Resolved</span>
+            @else
+                <span class="ix-status ix-status--unresolved">@include('partials.icon', ['name' => 'seal-clash'])Unresolved</span>
+            @endif
+        </div>
+
+        <div class="ix-case-actions">
+            <button type="submit" class="ix-btn ix-btn-primary">Update</button>
+            <a class="ix-btn ix-btn-secondary" href="/home">Back</a>
+        </div>
+    </form>
+</section>
 @endsection
