@@ -5,11 +5,13 @@
 @section('content')
 {{-- 1. Cover: the guilloche rosette (drawn by /js/front-door.js) behind the porcelain Wits plate --}}
 <section class="ix-cover" aria-labelledby="door-title">
+    {{-- Depth comes from front-door.js's model (the lift, the scroll tip), not the kit's data-depth: the kit's
+         pointer parallax would repaint 30k points of engraving on every pointer move --}}
     <div class="ix-rosette-stage" aria-hidden="true">
-        <div class="ix-rosette-layer" data-layer="ring" data-depth="0.04"><div class="ix-rosette-z"><svg viewBox="-600 -600 1200 1200" focusable="false"></svg></div></div>
-        <div class="ix-rosette-layer" data-layer="outer" data-depth="0.08"><div class="ix-rosette-z"><svg viewBox="-600 -600 1200 1200" focusable="false"></svg></div></div>
-        <div class="ix-rosette-layer" data-layer="inner" data-depth="0.12"><div class="ix-rosette-z"><svg viewBox="-600 -600 1200 1200" focusable="false"></svg></div></div>
-        <div class="ix-rosette-layer" data-layer="foil" data-depth="0.16"><div class="ix-rosette-z"><svg viewBox="-600 -600 1200 1200" focusable="false"></svg></div></div>
+        <div class="ix-rosette-layer" data-layer="ring"><div class="ix-rosette-z"><svg viewBox="-600 -600 1200 1200" focusable="false"></svg></div></div>
+        <div class="ix-rosette-layer" data-layer="outer"><div class="ix-rosette-z"><svg viewBox="-600 -600 1200 1200" focusable="false"></svg></div></div>
+        <div class="ix-rosette-layer" data-layer="inner"><div class="ix-rosette-z"><svg viewBox="-600 -600 1200 1200" focusable="false"></svg></div></div>
+        <div class="ix-rosette-layer" data-layer="foil"><div class="ix-rosette-z"><svg viewBox="-600 -600 1200 1200" focusable="false"></svg></div></div>
     </div>
 
     <div class="ix-cover-stack">
@@ -45,6 +47,7 @@
             <div class="ix-band-role">
                 <h3 class="ix-band-name" data-perch>Students</h3>
                 <p class="ix-band-view">Exams Schedule</p>
+                <span class="ix-band-glyph" aria-hidden="true"><span class="ix-glyph-rule"><i></i></span></span>
             </div>
             <div class="ix-band-body">
                 <ul class="ix-band-labels">
@@ -60,6 +63,7 @@
             <div class="ix-band-role">
                 <h3 class="ix-band-name" data-perch>Faculty staff</h3>
                 <p class="ix-band-view">Exam Bookings</p>
+                <span class="ix-band-glyph ix-glyph-slots" aria-hidden="true"><span>AM</span><span>PM</span></span>
             </div>
             <div class="ix-band-body">
                 <ul class="ix-band-labels">
@@ -75,6 +79,7 @@
             <div class="ix-band-role">
                 <h3 class="ix-band-name" data-perch>EGO staff</h3>
                 <p class="ix-band-view">View Clashes</p>
+                <span class="ix-band-glyph ix-glyph-seals" aria-hidden="true">@include('partials.icon', ['name' => 'seal-clash'])@include('partials.icon', ['name' => 'seal-check'])</span>
             </div>
             <div class="ix-band-body">
                 <ul class="ix-band-labels">

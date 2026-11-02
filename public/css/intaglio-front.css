@@ -21,16 +21,25 @@ body.ix-front main{display:block}
   background:radial-gradient(1100px 680px at 50% 44%,var(--night-lift) 0%,var(--night) 62%) var(--night);
   perspective:1400px;perspective-origin:50% 47%}
 
-/* The rosette stage. GSAP owns `transform` here and on .ix-rosette-z; the kit owns
-   `translate` on .ix-rosette-layer (data-depth). They never share an element, so the
-   stage is centred with margins rather than `translate`. */
+/* The engraving fades into the night before the cover's clip line, so no ring ever stops on a
+   straight edge. It follows the stage in tree order: above the rings, below the z-index:1 stack. */
+.ix-cover::after{content:"";position:absolute;left:0;right:0;bottom:0;height:clamp(140px,22vh,240px);z-index:-1;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(10,22,49,0),rgba(10,22,49,.6) 45%,var(--night) 85%)}
+
+/* The rosette stage. GSAP owns `transform` here and on .ix-rosette-z; the stage is centred with
+   margins rather than `translate`.
+   Depth is drawn in 2D (the brief's crispness and cost fallback): the stage is one flat plane
+   tipped back under the cover's 1400px perspective, and each layer takes the scale and offset
+   a real projection gives it at that tilt, z px off the plane: scale = 1400 / (1400 - z cos 14deg),
+   y = -z sin 14deg x scale. Deeper layers sit smaller and lower. front-door.js drives the same
+   model (the lift, the scroll tip; the pointer only turns the plane); this is its rest pose and the
+   reduced-motion state. preserve-3d here cost every other frame at 1440px. */
 .ix-rosette-stage{--rw:min(1320px,230vw);position:absolute;left:50%;top:47%;width:var(--rw);height:var(--rw);
-  margin:calc(var(--rw) / -2) 0 0 calc(var(--rw) / -2);z-index:-1;pointer-events:none;transform-style:preserve-3d;transform:rotateX(8deg)}
-.ix-rosette-layer,.ix-rosette-z{position:absolute;inset:0;transform-style:preserve-3d}
-[data-layer=ring]  .ix-rosette-z{transform:translateZ(-90px)}
-[data-layer=outer] .ix-rosette-z{transform:translateZ(-40px)}
-[data-layer=inner] .ix-rosette-z{transform:translateZ(0)}
-[data-layer=foil]  .ix-rosette-z{transform:translateZ(24px)}
+  margin:calc(var(--rw) / -2) 0 0 calc(var(--rw) / -2);z-index:-1;pointer-events:none;transform:rotateX(14deg)}
+.ix-rosette-layer,.ix-rosette-z{position:absolute;inset:0}
+[data-layer=ring]  .ix-rosette-z{transform:translateY(32.87px) scale(.9058)}    /* 150px behind the plane */
+[data-layer=outer] .ix-rosette-z{transform:translateY(16.59px) scale(.9525)}    /* 72px behind */
+[data-layer=foil]  .ix-rosette-z{transform:translateY(-13.05px) scale(1.0374)}  /* 52px in front */
 .ix-rosette-z svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;
   -webkit-mask-image:radial-gradient(closest-side,#000 72%,transparent 100%);mask-image:radial-gradient(closest-side,#000 72%,transparent 100%)}
 .ix-rosette-z path{fill:none;stroke-width:1;vector-effect:non-scaling-stroke}
@@ -69,14 +78,32 @@ body.ix-front .ix-btn-foil:focus-visible{outline:2px solid var(--foil);outline-o
 /* --------------------------------------------------------------------------
    Specimen sheet: "After you log in"
    -------------------------------------------------------------------------- */
-.ix-specimen{padding:96px 24px 64px;background:var(--night);color:var(--porcelain)}
+.ix-specimen{padding:72px 24px 24px;background:var(--night);color:var(--porcelain)}   /* the cover's fade already parts them */
 .ix-specimen-in{max-width:1080px;margin:0 auto}
-.ix-specimen-title{font:400 clamp(1.75rem,1.2rem + 1.8vw,2.5rem)/1.1 var(--serif);color:var(--porcelain);letter-spacing:-.01em;margin-bottom:16px}
+.ix-specimen-title{font:400 clamp(2.25rem,1.6rem + 2.2vw,3.25rem)/1.05 var(--serif);color:var(--porcelain);letter-spacing:-.012em;margin-bottom:16px}
 .ix-band{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;row-gap:16px;padding:40px 0;align-items:start}
 .ix-band-role{grid-column:1 / 5}
-.ix-band-body{grid-column:5 / 13;padding-top:10px}
-.ix-band-name{font:300 clamp(2rem,1.4rem + 2.2vw,3rem)/1.05 var(--serif);color:var(--porcelain);letter-spacing:-.01em}
+.ix-band-body{grid-column:5 / 13;padding-top:8px}
+.ix-band-name{font:300 clamp(1.75rem,1.3rem + 1.6vw,2.5rem)/1.05 var(--serif);color:var(--porcelain);letter-spacing:-.01em}
 .ix-band-view{margin-top:10px;font:600 1rem/1.4 var(--sans);color:var(--foil)}
+
+/* One real app glyph per role, engraved in foil (decorative, no data): the day-rule that sits
+   under every exam time, the AM and PM slot chips, and the clash and resolved seals. */
+.ix-band-glyph{display:flex;align-items:center;gap:10px;margin-top:20px;color:var(--foil)}
+.ix-glyph-rule{position:relative;display:block;width:168px;height:12px;
+  background:
+    linear-gradient(var(--foil),var(--foil)) 0 0/1px 100% no-repeat,
+    linear-gradient(var(--foil),var(--foil)) 100% 0/1px 100% no-repeat,
+    linear-gradient(rgba(210,173,98,.55),rgba(210,173,98,.55)) 0 50%/100% 1px no-repeat}
+.ix-glyph-rule::before,.ix-glyph-rule::after{content:"";position:absolute;top:2px;width:1px;height:8px;background:rgba(210,173,98,.75)}
+.ix-glyph-rule::before{left:33.33%}
+.ix-glyph-rule::after{left:66.67%}
+.ix-glyph-rule i{position:absolute;top:4px;left:8.33%;width:25%;height:4px;border-radius:2px;background:var(--foil);
+  box-shadow:inset 0 1px 0 rgba(255,244,214,.45)}
+.ix-glyph-slots span{box-sizing:border-box;display:inline-grid;place-items:center;min-width:44px;height:28px;padding:0 10px;
+  border:1px solid var(--foil-line);border-radius:var(--r-plate);font:600 .8125rem/1 var(--sans);letter-spacing:.06em;color:var(--foil)}
+.ix-glyph-slots span:first-child{background:rgba(210,173,98,.12)}
+.ix-glyph-seals .ix-i{width:30px;height:30px;stroke-width:1.25}
 .ix-band-labels{list-style:none;margin:0 0 14px;padding:0;font:500 .8125rem/1.6 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--mist-2)}
 .ix-band-labels li{display:inline;white-space:nowrap}
 .ix-band-labels li:not(:last-child)::after{content:"\00B7";content:"\00B7" / "";margin-left:.35em;color:var(--foil);opacity:.8}
@@ -86,11 +113,12 @@ body.ix-front .ix-btn-foil:focus-visible{outline:2px solid var(--foil);outline-o
 /* --------------------------------------------------------------------------
    Close
    -------------------------------------------------------------------------- */
-.ix-door-close{display:grid;justify-items:center;padding:64px 24px 24px;text-align:center;background:var(--night)}
+.ix-door-close{display:grid;justify-items:center;padding:40px 24px 24px;text-align:center;background:var(--night)}
 .ix-foil-rule--close{margin:0 auto 40px}
 
 /* Footer on night */
 .ix-front-foot{padding:32px 24px 40px;text-align:center;font:400 .8125rem/1.4 var(--sans);color:var(--mist-2);background:var(--night)}
+.ix-nowrap{white-space:nowrap}
 
 /* --------------------------------------------------------------------------
    Login: the same night world, still around a porcelain card
@@ -104,7 +132,7 @@ body.ix-front .ix-btn-foil:focus-visible{outline:2px solid var(--foil);outline-o
 .ix-card-logo{view-transition-name:wits-plate;width:max-content}
 .ix-card-logo img{display:block;width:200px;height:auto}
 .ix-login-title{margin-top:16px;font:400 2rem/1.1 var(--serif);color:var(--ink);letter-spacing:-.01em;text-wrap:balance}
-.ix-login-title-sub{font-weight:300;color:var(--ink-3)}
+.ix-login-title-sub{display:block;font-weight:300;color:var(--ink-3)}   /* its own line: the falcon perches after "Scheduler", clear of the keyline */
 .ix-login-form{margin-top:24px}
 .ix-login-form .ix-check{margin-top:16px}
 .ix-login-form .ix-btn-block{margin-top:20px}
@@ -116,7 +144,8 @@ body.ix-front .ix-login-card ::selection{background:var(--selection);color:var(-
    Responsive
    -------------------------------------------------------------------------- */
 @media (max-width:719.98px){
-  .ix-specimen{padding:72px 20px 48px}
+  .ix-specimen{padding:48px 20px 16px}
+  .ix-band-glyph{margin-top:16px}
   .ix-band{grid-template-columns:1fr;padding:28px 0}
   .ix-band-role,.ix-band-body{grid-column:1 / -1}
   .ix-band-body{padding-top:0}
@@ -128,8 +157,8 @@ body.ix-front .ix-login-card ::selection{background:var(--selection);color:var(-
   .ix-login-card{padding:24px}
   .ix-card-logo img{width:168px}
   .ix-login-title{font-size:1.75rem}
-  .ix-login-title-sub{display:block}
   .ix-btn-foil{min-width:180px;padding:0 36px}
+  .ix-front-foot{padding-left:72px;padding-right:72px}   /* wraps clear of the pause button */
 }
 
 @media (forced-colors:active){

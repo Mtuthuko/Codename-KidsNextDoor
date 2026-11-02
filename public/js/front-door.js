@@ -4,13 +4,17 @@
  *   1. Builds the guilloche rosette once: four layers (ring, outer braid, inner braid,
  *      foil band) drawn by a polar-band formula, the way a geometric lathe engraves.
  *   2. Welcome, first visit this session: the Rosette Lift (GSAP 3.13). The rosette
- *      engraves itself, the plate and title arrive, then the rosette tips back and
- *      separates into real 3D layers while a foil glint crosses it. About 2.8 s, once.
+ *      engraves itself, the plate and title arrive, then the rosette tips back and its
+ *      layers separate in depth while a foil glint crosses it. About 2.8 s, once.
  *      Any key or tap skips to the end. The Login button is never hidden or dimmed.
- *   3. Welcome at rest: the stage leans a few degrees toward a fine pointer.
+ *   3. Welcome at rest: as the cover scrolls away the rosette tips further back and its
+ *      layers spread apart; on a fine pointer the stage leans a few degrees toward it.
  *   4. Login: the rosette is drawn at rest, still, around the form.
  *   5. The falcon (Living Layer, options only), calm on login with a focus guard.
  *
+ * Depth is drawn in 2D (brief section 7, the crispness and cost fallback): the stage is one
+ * flat plane tipped back under the cover's perspective, and each layer takes the scale and
+ * offset a real projection would give it at that tilt. The CSS rest pose is the same model.
  * Reduced motion, no GSAP or no JavaScript: everything is visible at its rest state.
  * Branches on <html data-page>; does nothing on other pages.
  */
@@ -37,8 +41,9 @@
   var narrowTitle = mq('(max-width: 599.98px)');
   var gsap = window.gsap;
 
-  /* Falcon palettes from the Intaglio tokens: navy intaglio ink on paper, gold foil on night. */
-  var INK  = { primary: '#22366A', secondary: '#AEB9CF', accent: '#D2AD62', dark: '#0A1631', light: '#F6F7F9' };
+  /* Falcon palettes from the Intaglio tokens: navy intaglio ink on paper, gold foil on night.
+   * On paper the tail and wingtips are ink-3 (5.4:1 on porcelain), so the barred tail reads. */
+  var INK  = { primary: '#22366A', secondary: '#5B6680', accent: '#D2AD62', dark: '#0A1631', light: '#F6F7F9' };
   var FOIL = { primary: '#D2AD62', secondary: '#E3C47F', accent: '#F6F7F9', dark: '#8A6418', light: '#F6F7F9' };
   var DUST = ['#D2AD62', '#E3C47F', '#F6F7F9'];
   var TOGGLE = { position: 'bottom-right', bg: '#0A1631', fg: '#D2AD62', line: 'rgba(210,173,98,.55)', label: 'Moving effects' };
@@ -54,7 +59,51 @@
     ring:  [{ r0: 560, amp: 0, n: 0, lines: 1, cls: 'ix-g-ring' }]
   };
   var ORDER = ['inner', 'foil', 'outer', 'ring'];               // engraving order
-  var REST_Z = { ring: -90, outer: -40, inner: 0, foil: 24 };   // matches intaglio-front.css
+
+  /* The 2D depth model. Each layer sits DEPTH px off the stage plane (behind < 0 < in front).
+   * Seen through the cover's 1400px perspective on a plane tipped back by `tilt`, a layer
+   * shows at scale P / (P - z cos tilt), shifted by -z sin tilt: deeper layers sit smaller
+   * and lower. The rest pose (tilt 14, spread 1) is written out in intaglio-front.css. */
+  var P = 1400, TILT = 14, TILT_MAX = 24, SPREAD_MAX = 1.4;
+  var DEPTH = { ring: -150, outer: -72, inner: 0, foil: 52 };
+
+  // Writes the stage tilt and each layer's pose from `view`. GSAP owns `transform` on the stage
+  // and on .ix-rosette-z. The pointer only turns the whole plane, a compositor-only change; the
+  // layers' depth pose changes with the lift and the scroll tip. While it changes, each layer moves
+  // as a bitmap on its own compositor layer; 0.8 s after it settles they paint back into the stage,
+  // so an idle cover is a single layer (four full-screen layers under the dust cost a frame in two).
+  function poseDriver(stage, view) {
+    var rx = gsap.quickSetter(stage, 'rotationX', 'deg');
+    var ry = gsap.quickSetter(stage, 'rotationY', 'deg');
+    var zEls = stage.querySelectorAll('.ix-rosette-z');
+    var layers = ORDER.map(function (name) {
+      var z = stage.querySelector('[data-layer="' + name + '"] .ix-rosette-z');
+      // quickSetter does not split the `scale` alias, so set both axes
+      return z ? { d: DEPTH[name], y: gsap.quickSetter(z, 'y', 'px'), sx: gsap.quickSetter(z, 'scaleX'), sy: gsap.quickSetter(z, 'scaleY') } : null;
+    }).filter(Boolean);
+    var lastT = null, lastS = null, hotOn = false, hotT = 0;
+    function hot() {
+      if (!hotOn) { hotOn = true; gsap.set(zEls, { willChange: 'transform' }); }
+      clearTimeout(hotT);
+      hotT = setTimeout(function () { hotOn = false; gsap.set(zEls, { willChange: 'auto' }); }, 800);
+    }
+    return function draw() {
+      var tilt = view.lift * (TILT + (TILT_MAX - TILT) * view.p);   // the plane: the lift and the scroll tip
+      var spread = view.lift * (1 + (SPREAD_MAX - 1) * view.p);
+      rx(tilt - view.lift * view.ny * 4);                            // the pointer leans it +-2 degrees
+      ry(view.lift * view.nx * 6);                                   // and turns it +-3 degrees
+      if (tilt === lastT && spread === lastS) return;
+      if (lastT !== null) hot();                                     // the first, static pose stays painted in
+      lastT = tilt; lastS = spread;
+      var t = tilt * Math.PI / 180, c = Math.cos(t), sn = Math.sin(t);
+      for (var i = 0; i < layers.length; i++) {
+        var z = layers[i].d * spread, s = P / (P - z * c);
+        layers[i].y(-z * sn * s);
+        layers[i].sx(s);
+        layers[i].sy(s);
+      }
+    };
+  }
 
   // One braided band: `lines` closed paths, each phase-shifted by 2pi/lines.
   function band(svg, b, perLobe, ringSteps) {
@@ -104,12 +153,11 @@
     // Dash lengths are in screen units under non-scaling-stroke and in path units
     // otherwise; size them for whichever is longer, with a small margin.
     var dashScale = Math.max(1, (stage.offsetWidth || 1200) / 1200) * 1.06;
-    var out = { paths: [], zs: {}, gradient: null };
+    var out = { paths: [], gradient: null };
     ORDER.forEach(function (name) {
       var layer = stage.querySelector('[data-layer="' + name + '"]');
       if (!layer) return;
       var svg = layer.querySelector('svg');
-      out.zs[name] = layer.querySelector('.ix-rosette-z');
       if (name === 'foil') out.gradient = foilGradient(svg);
       BANDS[name].forEach(function (b) {
         band(svg, b, perLobe, ringSteps).forEach(function (p) {
@@ -126,30 +174,37 @@
   }
 
   /* ---------------------------------------------------------------------
-   * 2. Welcome: the Rosette Lift
+   * 2. Welcome: the Rosette Lift, then the scroll tip
    * ------------------------------------------------------------------- */
   function welcome() {
+    var cover = document.querySelector('.ix-cover');
     var stage = document.querySelector('.ix-cover .ix-rosette-stage');
     var plate = document.querySelector('.ix-cover .ix-plate');
     var plateShadow = plate ? plate.querySelector('.ix-plate-shadow') : null;
     var title = document.querySelector('.ix-door-title');
     var rule = document.querySelector('.ix-cover .ix-foil-rule');
     var sheen = rule ? rule.querySelector('.ix-sheen') : null;
-    if (!stage) return;
+    if (!stage || !cover) return;
 
-    var intro = root.classList.contains('door-intro') && !!gsap && !reduce;
+    var live = !!gsap && !reduce;   // GSAP drives the pose; otherwise the CSS rest pose holds
+    var intro = live && root.classList.contains('door-intro');
     var r = buildRosette(stage, intro);
-    var zs = ORDER.map(function (n) { return r.zs[n]; }).filter(Boolean);
-    var tl = null;
+    // lift: the intro's 0..1; p: how far the cover has scrolled away, 0..1; nx, ny: pointer, -0.5..0.5
+    var view = { lift: 1, p: 0, nx: 0, ny: 0 };
+    var draw = live ? poseDriver(stage, view) : function () {};
+    var tl = null, going = false;
+    var paused = function () { return !!(window.__livingLayer && !window.__livingLayer.isEnabled()); };
 
-    function markSeen() {
+    function settle() {
       try { window.sessionStorage.setItem('ks-door-seen', '1'); } catch (e) { /* storage blocked */ }
-      if (gsap) gsap.set([stage].concat(zs), { clearProps: 'willChange' });
-      tilt();
+      if (gsap) gsap.set(stage, { clearProps: 'willChange' });
+      goLive(true);
     }
 
     if (intro) {
-      tl = gsap.timeline({ defaults: { ease: 'expo.out' }, paused: true, onComplete: markSeen });
+      view.lift = 0;
+      draw();   // flat until the lift
+      tl = gsap.timeline({ defaults: { ease: 'expo.out' }, paused: true, onComplete: settle });
       tl.to(r.paths, {
           strokeDashoffset: 0, duration: 0.85, ease: 'power2.inOut', stagger: { each: 0.03 },
           onComplete: function () { gsap.set(r.paths, { clearProps: 'strokeDasharray,strokeDashoffset' }); }
@@ -158,13 +213,9 @@
           { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 0.9, clearProps: 'filter' }, 0.15)
         .fromTo(title, { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 1 }, 0.45)
         .fromTo(rule, { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: 'power3.inOut' }, 0.85)
-        // The lift: the rosette tips back and its layers separate in depth under the plate.
-        .set([stage].concat(zs), { willChange: 'transform' }, 1.39)
-        .fromTo(stage, { rotationX: 0 }, { rotationX: 8, duration: 1.2, ease: 'power3.inOut' }, 1.4)
-        .fromTo(zs, { z: 0 }, {
-            z: function (i, el) { return REST_Z[el.parentNode.getAttribute('data-layer')] || 0; },
-            duration: 1.2, ease: 'power3.inOut'
-          }, 1.4)
+        // The lift: the rosette tips back 14 degrees and its layers separate in depth under the plate.
+        .set(stage, { willChange: 'transform' }, 1.39)
+        .to(view, { lift: 1, duration: 1.2, ease: 'power3.inOut', onUpdate: draw }, 1.4)
         .fromTo(plate, { z: 0 }, { z: 36, duration: 1.2, ease: 'power3.inOut' }, 1.4)
         .fromTo(plateShadow, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.2, ease: 'power3.inOut' }, 1.4)
         // The foil shifts: one security-foil glint across the rule and the foil threads.
@@ -185,18 +236,39 @@
       setTimeout(play, 1200);   // never wait long for fonts
     } else {
       root.classList.remove('door-intro');
-      // Repeat visit this session: no engraving; the stage settles in.
-      if (gsap && !reduce) gsap.fromTo(stage, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3, ease: 'power1.out' });
-      tilt();
+      // Repeat visit this session (or effects paused): no engraving; the stage settles in.
+      if (live) gsap.fromTo(stage, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3, ease: 'power1.out' });
+      goLive(false);
     }
 
-    // At rest, the stage leans toward a fine pointer (mouse or trackpad), +-3 degrees.
-    var tilting = false;
-    function tilt() {
-      if (tilting || !gsap || reduce || !mq('(hover: hover) and (pointer: fine)')) return;
-      tilting = true;
-      var rx = gsap.quickTo(stage, 'rotationX', { duration: 0.6, ease: 'power3.out' });
-      var ry = gsap.quickTo(stage, 'rotationY', { duration: 0.6, ease: 'power3.out' });
+    // At rest the depth stays alive: the cover scrolling away tips the rosette from 14 to 24
+    // degrees and spreads its layers (the scroll parallax, from the depth model), and a fine
+    // pointer leans the stage +-3 degrees. Both hold still while moving effects are paused.
+    function goLive(animate) {
+      if (going || !live) return;
+      going = true;
+      var toP = gsap.quickTo(view, 'p', { duration: 0.5, ease: 'power3.out', onUpdate: draw });
+      var coverH = cover.offsetHeight, lastP = -1;
+      var scrolled = function () {
+        var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+        return Math.min(1, Math.max(0, y / Math.max(1, coverH)));
+      };
+      var onScroll = function () {
+        if (paused()) return;
+        var p = scrolled();
+        if (Math.abs(p - lastP) < 0.002) return;
+        lastP = p;
+        toP(p);
+      };
+      // Start from where the page already is: eased in after the intro, set at once otherwise.
+      lastP = scrolled();
+      if (animate) toP(lastP); else { view.p = lastP; draw(); }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', function () { coverH = cover.offsetHeight; lastP = -1; onScroll(); }, { passive: true });
+
+      if (!mq('(hover: hover) and (pointer: fine)')) return;   // coarse pointers keep the still lean
+      var toX = gsap.quickTo(view, 'nx', { duration: 0.6, ease: 'power3.out', onUpdate: draw });
+      var toY = gsap.quickTo(view, 'ny', { duration: 0.6, ease: 'power3.out', onUpdate: draw });
       var sx = null, toSheen = gsap.utils.mapRange(-3, 3, -120, 340);
       if (sheen) {
         gsap.set(sheen, { x: 0, xPercent: -120 });
@@ -204,23 +276,24 @@
       }
       window.addEventListener('pointermove', function (e) {
         if (e.pointerType && e.pointerType !== 'mouse' && e.pointerType !== 'pen') return;
-        if (window.__livingLayer && !window.__livingLayer.isEnabled()) return;   // paused: hold still
+        if (paused()) return;
         var nx = e.clientX / window.innerWidth - 0.5, ny = e.clientY / window.innerHeight - 0.5;
-        var y = nx * 6;
-        ry(y);
-        rx(8 - ny * 4);
-        if (sx) sx(toSheen(y));
+        toX(nx);
+        toY(ny);
+        if (sx) sx(toSheen(nx * 6));
       }, { passive: true });
     }
 
-    // The falcon: full on the welcome page. It arrives as the lift settles.
+    // The falcon: full on the welcome page. It arrives as the lift settles. On phones it
+    // cruises in the clear night above the plate, never on the title's last letters.
     if (window.LivingLayer) {
       window.LivingLayer.init({
-        character: 'falcon', look: 'rich', finish: 'foil', size: 60, side: 'right',
+        character: 'falcon', look: 'rich', finish: 'foil', size: 72, side: 'right',
         colors: INK, colorsOnDark: FOIL, zIndex: 60, toggle: TOGGLE,
         intro: true, introDelay: intro ? 2400 : 600,
+        lane: phone ? { x: 0.86, y: 0.1 } : null,
         perch: narrowTitle ? '[data-perch]:not(.ix-door-title)' : '[data-perch]',
-        dust: { colors: DUST, amount: 0.3, ambient: true, trail: true }
+        dust: { colors: DUST, amount: 0.5, ambient: true, trail: true }
       });
     }
   }
@@ -235,7 +308,7 @@
 
     if (!window.LivingLayer) return;
     window.LivingLayer.init({
-      character: 'falcon', look: 'rich', finish: 'foil', size: 56, side: 'right', calm: true,
+      character: 'falcon', look: 'rich', finish: 'foil', size: 64, side: 'right', calm: true,
       colors: INK, colorsOnDark: FOIL, zIndex: 60, toggle: TOGGLE, intro: true, introDelay: 700,
       lane: phone ? { x: 0.84, y: 0.055 } : null,
       dust: { colors: DUST, amount: 0.15, ambient: false, trail: true }
