@@ -9,106 +9,66 @@
 
     <title>Wits-ExamScheduler</title>
 
-    <!-- Scripts -->
+    <!-- Scripts (Vue 2 + Bootstrap dropdown; mounts on #app) -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
-    <!-- Styles -->
-    <!--<link href="/css/main.css" rel="stylesheet">-->
+    <!-- Fonts: Noto Serif Display (display) + Public Sans (working face) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@300..500&family=Public+Sans:wght@400..700&display=swap" rel="stylesheet">
+
+    <!-- Styles: app.css keeps Bootstrap's dropdown; intaglio.css is the design system -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/intaglio.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="ix">
+    <a class="ix-skip" href="#content">Skip to content</a>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
+        <header class="ix-appbar">
+            <div class="ix-appbar-in">
+                <span class="ix-plate-tab"><img src="/images/wits-logo.png" alt="University of the Witwatersrand, Johannesburg" width="150" height="53"></span>
+                <span class="ix-appbar-name">Exam Scheduler</span>
 
+                <div class="ix-appbar-end">
+                    @guest
+                        {{-- Login and Register links stay hidden for guests, as before. --}}
+                    @else
+                        <div class="dropdown">
+                            <a id="navbarDropdown" class="dropdown-toggle ix-usermenu" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                @include('partials.icon', ['name' => 'user'])
+                                <span class="ix-usermenu-name">{{ Auth::user()->username }}</span>
+                                @include('partials.icon', ['name' => 'chevron-down', 'class' => 'ix-chev'])
+                            </a>
 
-
-              <!--
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Wits-ExamScheduler') }}
-                </a>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                  -->
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                      <li>
-                      <img  src ="https://www.wits.ac.za/media/wits-university-style-assets/images/wits-logo.png" alt="wits logo">
-                      <!--<ul style="align-self:center;padding:0 2px; font-size: 40px;">
-
-                            Exam Scheduler
-
-                      </ul>-->
-                    </li>
-
-
-                    </ul>
-
-                    <ul style="align-self:center;padding:0 2px; font-size: 40px;">
-
-                          Exam Scheduler
-
-                    </ul>
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                        <!--
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                          -->
-                        @else
-                            <li class="nav-item dropdown">
-                                
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                   
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-                                <path id="ic_account_circle_24px" d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,3A3,3,0,1,1,9,8,3,3,0,0,1,12,5Zm0,14.2a7.2,7.2,0,0,1-6-3.22c.03-1.99,4-3.08,6-3.08s5.97,1.09,6,3.08A7.2,7.2,0,0,1,12,19.2Z" transform="translate(-2 -2)"/>
-                                </svg>
-
-                                {{ Auth::user()->username }} <span class="caret"></span>
-                                    
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item ix-menu-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                    @include('partials.icon', ['name' => 'sign-out'])
+                                    {{ __('Logout') }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </div>
+                    @endguest
                 </div>
             </div>
-        </nav>
+        </header>
 
-        <main class="py-4">
+        <main id="content" class="ix-page" tabindex="-1" v-pre>
             @yield('content')
-            <footer>
-              copyright 2020 - CodeName: Kids Nextdoor
-            </footer>
         </main>
+
+        <footer class="ix-appfoot">copyright 2020 - CodeName: Kids Nextdoor</footer>
     </div>
+
+    {{-- Scripts sit outside #app: Vue 2 strips <script> tags inside the element it mounts on. --}}
+    @stack('scripts')
+    @stack('living')
 </body>
 </html>
