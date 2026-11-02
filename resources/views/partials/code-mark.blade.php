@@ -1,0 +1,2 @@
+@php /* Course code with the searched part wrapped in a foil <mark>. Keep the output on one line so innerText reads the code as one string. */ $ixRaw = (string) $raw; $ixQ = trim((string) request('search')); $ixPos = $ixQ !== '' ? mb_stripos($ixRaw, $ixQ) : false; @endphp
+@if ($ixPos === false){{ $ixRaw }}@else{{ mb_substr($ixRaw, 0, $ixPos) }}<mark class="ix-hit" style="--d:{{ $delay ?? 0 }}ms">{{ mb_substr($ixRaw, $ixPos, mb_strlen($ixQ)) }}</mark>{{ mb_substr($ixRaw, $ixPos + mb_strlen($ixQ)) }}@endif

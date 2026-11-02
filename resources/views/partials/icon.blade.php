@@ -1,0 +1,1 @@
+<svg class="ix-i {{ $class ?? '' }}" aria-hidden="true" focusable="false"><use href="/images/icons.svg#i-{{ $name }}"></use></svg>
